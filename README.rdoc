@@ -1,0 +1,10 @@
+== README
+
+Это тестовый проект для курса thinknetica.com, на основе сайта StackOverflow
+
+Что требуется:
+* Ruby version - 2.2.0
+* Rails version - 4.2.1
+* Database - postgres v9.3
+
+
