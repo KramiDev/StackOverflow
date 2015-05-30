@@ -7,4 +7,6 @@
 * Rails version - 4.2.1
 * Database - postgres v9.3
 
+Находим config/database.yml.example и изменяем имя файла на database.yml
+
 
