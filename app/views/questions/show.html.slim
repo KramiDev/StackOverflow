@@ -1,0 +1,25 @@
+h3
+  = @question.title
+p
+  = @question.body
+br
+
+- unless @question.answers.nil?
+  - for answer in @question.answers
+    .row
+      .col-md-4.col-md-offset-4(style="border: 1px solid black; border-radius: 5px; margin-top: 5px; padding: 7px;" )
+        = answer.body
+br
+
+.row
+  .col-md-4.col-md-offset-4
+    = form_tag question_answers_path(@question), method: :post
+      h4 Добавить ответ
+      .form-group
+        = label_tag :body, "Напишите свой ответ"
+        = text_area_tag :body, nil, class: 'form-control'
+      .form-group
+        = submit_tag 'Добавить комментарий', class: 'btn btn-primary btn-sm'
+br
+.row
+  = link_to 'Посмотреть все вопросы', questions_path
