@@ -1,0 +1,29 @@
+h3
+  = @question.title
+p
+  = @question.body
+br
+
+- @question.answers.each do |answer|
+  - if answer.persisted?
+    .row
+      .col-md-4.col-md-offset-4(style="border: 1px solid black; border-radius: 5px; margin-top: 5px; padding: 7px;" )
+        = answer.body
+br
+
+.row
+  .col-md-4.col-md-offset-4
+    - if @answer
+      - @answer.errors.full_messages.each do |msg|
+        p(style="color: red;" )
+          = msg
+    = form_for [@question, Answer.new], method: :post do |f|
+      h4 Добавить ответ
+      .form-group
+        = f.label :body, "Напишите свой ответ"
+        = f.text_area :body, class: 'form-control'
+      .form-group
+        = f.submit 'Добавить комментарий', class: 'btn btn-primary btn-sm'
+br
+.row
+  = link_to 'Посмотреть все вопросы', questions_path

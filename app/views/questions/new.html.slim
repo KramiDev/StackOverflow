@@ -1,0 +1,14 @@
+.row
+  .col-md-4.col-md-offset-4
+    .question-form
+      = form_for @question do |f|
+        h3 Задать свой вопрос
+        br
+        .form-group
+          = f.label :title, 'Сформулируйте суть своего вопроса'
+          = f.text_field :title, class: 'form-control'
+        .form-group
+          = f.label :body, 'Опишите подробно свой вопрос'
+          = f.text_area :body, class: 'form-control'
+        .form-group
+          = f.submit 'Задать вопрос', class: 'btn btn-primary btn-sm'
