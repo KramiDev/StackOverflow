@@ -6,9 +6,10 @@ br
 
 - if @question.answers
   - @question.answers.each do |answer|
-    .row
-      .col-md-4.col-md-offset-4(style="border: 1px solid black; border-radius: 5px; margin-top: 5px; padding: 7px;" )
-        = answer.body
+    - if answer.persisted?
+      .row
+        .col-md-4.col-md-offset-4(style="border: 1px solid black; border-radius: 5px; margin-top: 5px; padding: 7px;" )
+          = answer.body
 br
 
 .row
