@@ -10,8 +10,10 @@ RSpec.describe AnswersController, type: :controller do
     context 'with valid attributes' do
 
       it 'saves answer in database' do
-        expect { post :create, question_id: question, answer: attributes_for(:answer) }.to change(Answer, :count).by(1)
-        expect(Answer.last.question_id).to eq question.id
+        expect { post :create, question_id: question, answer: attributes_for(:answer) }.to change(question.answers, :count).by(1)
+        # expect(Answer.last.question_id).to eq question.id
+        # expect(assigns(:answer)).to belong_to(:question)
+
       end
 
       it 'redirect to question with id' do
