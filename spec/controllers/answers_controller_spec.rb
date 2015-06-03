@@ -27,6 +27,10 @@ RSpec.describe AnswersController, type: :controller do
         expect { post :create, question_id: question, answer: attributes_for(:invalid_answer) }.to_not change(Answer, :count)
       end
 
+      it 'render questions/show view' do
+        post :create, question_id: question, answer: attributes_for(:invalid_answer)
+        expect(response).to render_template 'questions/show'
+      end
 
     end
 

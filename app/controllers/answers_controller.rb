@@ -1,15 +1,24 @@
 class AnswersController < ApplicationController
 
+
+  def new
+    @answer = Answer.new
+  end
+
   def create
-    question = Question.find(params[:question_id])
-    question.answers.build(answers_params)
-    question.save
-    redirect_to question
+    @question = Question.find(params[:question_id])
+    @answer = @question.answers.new(answers_params)
+    if @answer.save
+      redirect_to @question
+    else
+      @question.reload
+      render 'questions/show'
+    end
   end
 
   private
 
   def answers_params
-    params.permit(:body)
+    params.require(:answer).permit(:body)
   end
 end

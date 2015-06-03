@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-  before_action :get_question_by_id, only: [:show, :edit, :update, :destroy]
+  before_action :find_question, only: [:show, :edit, :update, :destroy]
 
   def index
     @questions = Question.all
@@ -18,7 +18,7 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.new(questions_params)
     if @question.save
-      redirect_to question_path(@question)
+      redirect_to @question
     else
       render :new
     end
@@ -39,7 +39,7 @@ class QuestionsController < ApplicationController
 
   private
 
-  def get_question_by_id
+  def find_question
     @question = Question.find(params[:id])
   end
 
