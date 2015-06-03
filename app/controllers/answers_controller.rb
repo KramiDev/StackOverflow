@@ -11,7 +11,6 @@ class AnswersController < ApplicationController
     if @answer.save
       redirect_to @question
     else
-      @question.reload
       render 'questions/show'
     end
   end

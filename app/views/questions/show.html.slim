@@ -4,23 +4,21 @@ p
   = @question.body
 br
 
-- unless @question.answers.nil?
-  - for answer in @question.answers
-    - unless answer.body.nil?
-      .row
-        .col-md-4.col-md-offset-4(style="border: 1px solid black; border-radius: 5px; margin-top: 5px; padding: 7px;" )
-          = answer.body
+- if @question.answers
+  - @question.answers.each do |answer|
+    .row
+      .col-md-4.col-md-offset-4(style="border: 1px solid black; border-radius: 5px; margin-top: 5px; padding: 7px;" )
+        = answer.body if answer.persisted?
 br
 
 .row
   .col-md-4.col-md-offset-4
+    - if @answer
+      - @answer.errors.full_messages.each do |msg|
+        p(style="color: red;" )
+          = msg
     = form_for [@question, Answer.new], method: :post do |f|
       h4 Добавить ответ
-      - unless @answer.nil?
-        - if @answer.errors.any?
-          - @answer.errors.full_messages.each do |msg|
-            p(style="color: red;" )
-              = msg
       .form-group
         = f.label :body, "Напишите свой ответ"
         = f.text_area :body, class: 'form-control'
