@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :find_question, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -9,16 +10,16 @@ class QuestionsController < ApplicationController
   end
 
   def new
-    @question = Question.new
+    @question = current_user.questions.new
   end
 
   def edit
   end
 
   def create
-    @question = Question.new(questions_params)
+    @question = current_user.questions.new(questions_params)
     if @question.save
-      redirect_to @question
+      redirect_to @question, notice: 'Ваш вопрос успешно создан'
     else
       render :new
     end
@@ -34,7 +35,7 @@ class QuestionsController < ApplicationController
 
   def destroy
     @question.destroy
-    redirect_to questions_path
+    redirect_to questions_path, notice: 'Ваш вопрос удален'
   end
 
   private

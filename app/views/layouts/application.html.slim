@@ -1,10 +1,30 @@
 doctype html
-html
 head
   title StackOverflow
   = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
   = javascript_include_tag 'application', 'data-turbolinks-track' => true
   = csrf_meta_tags
 body
-  .container.text-center
+  .container
+    .row.header
+      .col-md-3.logo
+        = link_to root_path do
+          p(style='font-size: 30px;')
+            span(style="color: #FF5A00;") Stack
+            span Overflow
+      .col-md-9.menu
+        ul class="nav nav-pills navbar-right"
+          li
+            = link_to 'Все вопросы', root_path
+          - if current_user
+            li
+              = link_to 'Выйти', destroy_user_session_path, method: :delete
+          - else
+            li
+              = link_to 'Регистрация', new_user_registration_path
+            li
+              = link_to 'Войти', new_user_session_path
+    br
+    = notice if flash[:notice]
+    = alert if flash[:alert]
     = yield

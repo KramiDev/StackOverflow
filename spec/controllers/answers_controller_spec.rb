@@ -4,8 +4,11 @@ RSpec.describe AnswersController, type: :controller do
 
   let(:question) { FactoryGirl.create(:question) }
   let(:answer) { create(:answer) }
+  let(:user) { create(:user) }
 
   describe 'POST #create' do
+
+    sign_in_user
 
     context 'with valid attributes' do
 
