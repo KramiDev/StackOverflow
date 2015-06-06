@@ -11,6 +11,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'slim-rails'
+gem 'devise'
 
 group :development, :test do
   gem 'byebug'
@@ -23,6 +24,8 @@ end
 
 group :test do
   gem 'shoulda-matchers'
+  gem 'capybara'
+  gem 'launchy'
 end
 
 source 'https://rails-assets.org' do

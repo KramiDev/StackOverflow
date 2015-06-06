@@ -1,5 +1,4 @@
 doctype html
-html
 head
   title StackOverflow
   = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
@@ -7,4 +6,10 @@ head
   = csrf_meta_tags
 body
   .container.text-center
+    - if current_user
+      = link_to 'Выйти', destroy_user_session_path, method: :delete
+    p.notice
+      = notice
+    p.alert
+      = alert
     = yield
