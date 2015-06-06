@@ -30,9 +30,8 @@ feature 'Create question', %q{
   scenario 'Non-authenticated user try to create question' do
 
     visit questions_path
-    click_on 'Задать вопрос'
 
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).to_not have_link 'Задать вопрос'
 
   end
 

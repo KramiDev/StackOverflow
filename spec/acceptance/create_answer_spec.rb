@@ -23,11 +23,9 @@ feature 'The user create answer', %q{
   scenario 'Non-authenticate user try to create answer' do
 
     visit question_path(question)
-    fill_in 'Напишите свой ответ', with: 'Мой ответ'
-    click_on 'Добавить ответ'
 
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
-    expect(current_path).to eq new_user_session_path
+    expect(page).to_not have_link 'Мой ответ'
+
 
   end
 

@@ -5,7 +5,7 @@ head
   = javascript_include_tag 'application', 'data-turbolinks-track' => true
   = csrf_meta_tags
 body
-  .container.text-center
+  .container
     .row.header
       .col-md-3.logo
         = link_to root_path do
@@ -21,12 +21,10 @@ body
               = link_to 'Выйти', destroy_user_session_path, method: :delete
           - else
             li
-              = link_to 'Зарегистрироваться', new_user_registration_path
+              = link_to 'Регистрация', new_user_registration_path
             li
               = link_to 'Войти', new_user_session_path
-
-    p.notice
-      = notice
-    p.alert
-      = alert
+    br
+    = notice if flash[:notice]
+    = alert if flash[:alert]
     = yield
