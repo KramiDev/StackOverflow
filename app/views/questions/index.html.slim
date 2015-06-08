@@ -5,5 +5,7 @@
         = link_to question.title, question
 
 br
-.row
-  = link_to 'Добавить свой вопрос', new_question_path, class: 'btn btn-warning'
+
+- if current_user
+  .row
+    = link_to 'Задать вопрос', new_question_path, class: 'btn btn-warning'

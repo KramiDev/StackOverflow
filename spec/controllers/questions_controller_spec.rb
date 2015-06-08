@@ -31,6 +31,8 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'GET #new' do
 
+    sign_in_user
+
     before { get :new }
 
     it 'get a new question object' do
@@ -43,6 +45,8 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'GET #edit' do
 
+    sign_in_user
+
     before { get :edit, id: question }
 
     it 'get a question by id for edit' do
@@ -54,6 +58,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'POST #create' do
+
+    sign_in_user
 
     context 'with valid attributes' do
 
@@ -85,6 +91,8 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'PATCH #update' do
 
+    sign_in_user
+
     context 'valid attributes' do
 
       it 'find question by id' do
@@ -110,8 +118,8 @@ RSpec.describe QuestionsController, type: :controller do
       it 'it does not update the question' do
         patch :update, id: question, question: attributes_for(:invalid_question)
         question.reload
-        expect(question.title).to eq 'MyString'
-        expect(question.body).to eq 'MyText'
+        expect(question.title).to eq question.title
+        expect(question.body).to eq question.body
       end
 
       it 'render edit view' do
@@ -125,15 +133,36 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'DELETE #destroy' do
 
+    sign_in_user
+
     before { question }
 
-    it 'delete the question' do
-      expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
+    context 'User try to delete own question' do
+
+      let!(:question) { create(:question, user: @user) }
+
+      it 'delete the question' do
+        expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
+      end
+
+      it 'redirect to index' do
+        delete :destroy, id: question
+        expect(response).to redirect_to questions_path
+      end
+
     end
 
-    it 'redirect to index' do
-      delete :destroy, id: question
-      expect(response).to redirect_to questions_path
+    context 'User try delete other question' do
+
+      it 'delete the other question' do
+        expect { delete :destroy, id: question }.to_not change(Question, :count)
+      end
+
+      it 'redirect to questions_list' do
+        delete :destroy, id: question
+        expect(response).to redirect_to question
+      end
+
     end
 
   end
