@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :find_question, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -16,7 +17,7 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = Question.new(questions_params)
+    @question = Question.new(questions_params.merge(user: current_user))
     if @question.save
       redirect_to @question
     else
@@ -33,8 +34,12 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question.destroy
-    redirect_to questions_path
+    if @question.user_id == current_user.id
+      @question.destroy
+      redirect_to questions_path, notice: 'Ваш вопрос удален'
+    else
+      redirect_to @question
+    end
   end
 
   private
