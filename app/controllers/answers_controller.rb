@@ -20,9 +20,9 @@ class AnswersController < ApplicationController
     answer = Answer.find(params[:id])
     if answer.user_id == current_user.id
       answer.destroy
-      redirect_to question_path(id: params[:question_id]), notice: 'Ваш ответ удален'
+      redirect_to question_path(params[:question_id]), notice: 'Ваш ответ удален'
     else
-      redirect_to question_path(id: params[:question_id])
+      redirect_to question_path(params[:question_id])
     end
   end
 
