@@ -17,7 +17,7 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = Question.new(questions_params)
+    @question = Question.new(questions_params.merge(user: current_user))
     if @question.save
       redirect_to @question
     else
