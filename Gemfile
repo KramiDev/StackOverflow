@@ -23,6 +23,8 @@ group :development, :test do
   gem 'guard'
   gem 'guard-bundler', require: false
   gem 'guard-rspec', require: false
+  gem 'selenium-webdriver'
+  gem 'database_cleaner'
 end
 
 group :test do
