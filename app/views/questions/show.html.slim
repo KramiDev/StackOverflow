@@ -3,8 +3,8 @@ h3
 p
   = @question.body
 br
-- if current_user
-  = link_to 'Удалить вопрос', question_path(@question), method: :delete if @question.user_id == current_user.id
+- if current_user and @question.user_id == current_user.id
+  = link_to 'Удалить вопрос', question_path(@question), method: :delete
 br
 
 - @question.answers.each do |answer|
@@ -13,8 +13,8 @@ br
       .col-md-4.col-md-offset-4(style="border: 1px solid black; border-radius: 5px; margin-top: 5px; padding: 7px;" )
         = answer.body
         br
-        - if current_user
-          = link_to 'Удалить ответ', question_answer_path(@question, answer), method: :delete if current_user.id == answer.user_id
+        - if current_user and current_user.id == answer.user_id
+          = link_to 'Удалить ответ', question_answer_path(@question, answer), method: :delete
 br
 
 - if current_user
