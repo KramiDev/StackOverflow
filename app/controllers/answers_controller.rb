@@ -2,18 +2,9 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
 
 
-  def new
-    @answer = Answer.new
-  end
-
   def create
     @question = Question.find(params[:question_id])
-    @answer = @question.answers.new(answers_params.merge(user: current_user))
-    if @answer.save
-      redirect_to @question
-    else
-      render 'questions/show'
-    end
+    @answer = @question.answers.create(answers_params.merge(user: current_user))
   end
 
   def destroy

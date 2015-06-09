@@ -7,14 +7,8 @@ br
   = link_to 'Удалить вопрос', question_path(@question), method: :delete
 br
 
-- @question.answers.each do |answer|
-  - if answer.persisted?
-    .row
-      .col-md-4.col-md-offset-4(style="border: 1px solid black; border-radius: 5px; margin-top: 5px; padding: 7px;" )
-        = answer.body
-        br
-        - if current_user and current_user.id == answer.user_id
-          = link_to 'Удалить ответ', question_answer_path(@question, answer), method: :delete
+.answers
+  = render @question.answers
 br
 
 - if current_user
@@ -24,7 +18,7 @@ br
         - @answer.errors.full_messages.each do |msg|
           p(style="color: red;" )
             = msg
-      = form_for [@question, Answer.new], method: :post do |f|
+      = form_for [@question, @answer], remote: true, method: :post do |f|
         h4 Добавить ответ
         .form-group
           = f.label :body, "Напишите свой ответ"
