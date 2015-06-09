@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../acceptance_helper'
 
 feature 'Sign in', %q{
   In order to be able to create questions and answers

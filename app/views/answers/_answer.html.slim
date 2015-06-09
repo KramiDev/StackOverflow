@@ -1,0 +1,41 @@
+- if answer.persisted?
+  div(class="row answer-#{answer.id}" )
+    - best = 'best' if answer.best
+    .col-md-10.col-md-offset-1.answer-block(class='#{best}')
+      .row
+        .col-md-12
+          .pull-left
+            span Добавлен:
+            strong
+              = answer.user.email
+          .pull-right
+            span Дата:
+            strong
+              = answer.created_at.strftime('%d/%m/%Y в %H:%M')
+            br
+            - if answer.best
+              span(style='color: green;') Отмечен решением
+      br
+      .row
+        .col-md-12(class='answer-body-#{answer.id}')
+          = answer.body
+      br
+
+      ul.nav.nav-pills.navbar-right
+        - if current_user and current_user.id == answer.question.user_id && current_user.id != answer.user_id && !answer.best
+          li
+            = link_to 'Выбрать лучшим', best_question_answer_path(answer.question, answer), method: :post, remote: true
+        - if current_user and current_user.id == answer.user_id
+          li
+            = link_to 'Редактировать', '', class: 'answer-edit-link', data: { answer_id: answer.id }
+          li
+            = link_to 'Удалить ответ', question_answer_path(@question, answer), method: :delete, remote: true, class: 'answer-delete-link'
+      .row
+        .col-md-12.text-center
+          = form_for [answer.question, answer], method: :patch, remote: true do |f|
+            .answer-error
+            = f.label :body, 'Ответ'
+            br
+            = f.text_area :body
+            br
+            = f.submit 'Сохранить'

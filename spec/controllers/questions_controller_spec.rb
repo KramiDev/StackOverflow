@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
 
+  let(:user) { create(:user) }
   let(:question) { create(:question) }
 
   describe 'GET #index' do
@@ -23,6 +24,10 @@ RSpec.describe QuestionsController, type: :controller do
 
     it 'get one question by id' do
       expect(assigns(:question)).to eq question
+    end
+
+    it 'assigns new answer for question' do
+      expect(assigns(:answer)).to be_a_new(Answer)
     end
 
     it { should render_template :show }
@@ -96,35 +101,35 @@ RSpec.describe QuestionsController, type: :controller do
     context 'valid attributes' do
 
       it 'find question by id' do
-        patch :update, id: question, question: attributes_for(:question)
+        patch :update, id: question, question: attributes_for(:question), format: :js
         expect(assigns(:question)).to eq question
       end
 
       it 'change question attribute' do
-        patch :update, id: question, question: { title: 'New Title', body: 'New Body' }
+        patch :update, id: question, question: { title: 'New Title', body: 'New Body' }, format: :js
         question.reload
         expect(question.title).to eq 'New Title'
         expect(question.body).to eq 'New Body'
       end
 
       it 'redirect to the updated question' do
-        patch :update, id: question, question: attributes_for(:question)
-        expect(response).to redirect_to :question
+        patch :update, id: question, question: attributes_for(:question), format: :js
+        expect(response).to render_template 'questions/update'
       end
     end
 
     context 'not valid attibutes' do
 
       it 'it does not update the question' do
-        patch :update, id: question, question: attributes_for(:invalid_question)
+        patch :update, id: question, question: attributes_for(:invalid_question), format: :js
         question.reload
         expect(question.title).to eq question.title
         expect(question.body).to eq question.body
       end
 
       it 'render edit view' do
-        patch :update, id: question, question: attributes_for(:invalid_question)
-        expect(response).to render_template :edit
+        patch :update, id: question, question: attributes_for(:invalid_question), format: :js
+        expect(response).to render_template 'questions/update'
       end
 
     end

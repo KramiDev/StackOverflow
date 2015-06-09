@@ -2,7 +2,9 @@ Rails.application.routes.draw do
 
   devise_for :users
   resources :questions do
-    resources :answers, only: [:create, :destroy]
+    resources :answers, only: [:create, :update, :destroy] do
+      post :best, on: :member
+    end
   end
 
   root 'questions#index'

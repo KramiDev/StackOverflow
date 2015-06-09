@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../acceptance_helper'
 
 feature 'Delete answer' do
 
@@ -6,7 +6,7 @@ feature 'Delete answer' do
   given!(:question) { create(:question) }
   given!(:answer) { create(:answer, user: user, question: question) }
 
-  scenario 'Authenticated user try to delete answer' do
+  scenario 'Authenticated user try to delete answer', js: true do
 
     sign_in(user)
 
@@ -14,7 +14,7 @@ feature 'Delete answer' do
     click_on 'Удалить ответ'
 
     expect(current_path).to eq question_path(question)
-    expect(page).to have_content 'Ваш ответ удален'
+    expect(page).to_not have_content answer.body
 
   end
 

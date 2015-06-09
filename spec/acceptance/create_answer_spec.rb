@@ -1,7 +1,7 @@
-require 'rails_helper'
+require_relative '../acceptance_helper'
 
 feature 'Create answer', %q{
-  In order to be able to help other users
+  In order to exchange my experience
   As an user
   I want to create answer
  } do
@@ -9,7 +9,7 @@ feature 'Create answer', %q{
   given!(:user) { create(:user) }
   given!(:question) { create(:question, user: user) }
 
-  scenario 'Authenticated user create answer' do
+  scenario 'Authenticated user create answer', js: true do
 
     sign_in(user)
 

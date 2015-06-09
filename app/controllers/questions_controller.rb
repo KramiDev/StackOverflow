@@ -3,10 +3,11 @@ class QuestionsController < ApplicationController
   before_action :find_question, only: [:show, :edit, :update, :destroy]
 
   def index
-    @questions = Question.all
+    @questions = Question.all.order(created_at: 'DESC')
   end
 
   def show
+    @answer = @question.answers.build
   end
 
   def new
@@ -27,9 +28,9 @@ class QuestionsController < ApplicationController
 
   def update
     if @question.update(questions_params)
-      redirect_to @question
+      flash[:notice] = 'Вопрос успешно обновлен'
     else
-      render :edit
+      flash[:alert] = 'Обновить не удалось'
     end
   end
 
