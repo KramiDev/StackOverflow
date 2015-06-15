@@ -11,7 +11,7 @@ class Answer < ActiveRecord::Base
 
 
   def best_answer
-    best = self.question.load_best_answer
+    best = self.question.best_answer
     best.update!(best: false) if best
     self.update!(best: true)
   end
