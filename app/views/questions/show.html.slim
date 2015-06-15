@@ -23,7 +23,7 @@
 
 
   .answers
-    = render @question.answers.order(best: 'DESC')
+    = render @question.answers
   br
   - if current_user
     .row

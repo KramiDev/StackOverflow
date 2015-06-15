@@ -85,21 +85,9 @@ RSpec.describe AnswersController, type: :controller do
 
       before { question.update!(user: @user) }
 
-      it 'change best answer' do
-        post :best, question_id: question, id: answer, answer: { best: true }, format: :js
-        answer.reload
-        expect(answer.best).to be true
-      end
-
       it 'render template answers/best' do
         post :best, question_id: question, id: answer, answer: { best: true }, format: :js
         expect(response).to render_template 'answers/best'
-      end
-
-      it '1 answer the best' do
-        post :best, question_id: question, id: answer, answer: { best: true }, format: :js
-        answer1.reload
-        expect(answer1.best).to be false
       end
 
     end
