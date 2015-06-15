@@ -1,15 +1,15 @@
 doctype html
 head
   title StackOverflow
-  = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
-  = javascript_include_tag 'application', 'data-turbolinks-track' => true
+  = stylesheet_link_tag    'application', media: 'all'
+  = javascript_include_tag 'application'
   = csrf_meta_tags
 body
-  .container.text-center
-    - if current_user
-      = link_to 'Выйти', destroy_user_session_path, method: :delete
-    - else
-      = link_to 'Регистрация', new_user_registration_path
-    = notice if flash[:notice]
-    = alert if flash[:alert]
+  .container
+    = render partial: 'partials/menu'
+    = render partial: 'partials/second_menu' if current_user
+    .notice
+      = notice
+    .alert
+      = alert
     = yield

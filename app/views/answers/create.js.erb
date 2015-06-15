@@ -1,2 +1,20 @@
-$('.answers').append('<%= j render @answer %>');
-$('#answer_body').val('');
+clearAlertAndNotice();
+<% if @answer.errors.present? %>
+    <% @answer.errors.full_messages.each do |msg| %>
+        $('.answer-errors').append('<%= j msg %>');
+    <% end %>
+    <% if flash[:alert] %>
+        $('.alert').append('<%= flash[:alert] %>');
+        <%= flash[:alert] = '' %>
+    <% end %>
+<% else %>
+    <% if flash[:notice] %>
+        $('.notice').append('<%= flash[:notice] %>');
+        <%= flash[:notice] = '' %>
+    <% end %>
+    $('.answers').append('<%= j render @answer %>');
+    $('.main-answer #answer_body').val('');
+
+<% end %>
+questionEditLink();
+answerEditLink();

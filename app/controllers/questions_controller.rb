@@ -28,9 +28,9 @@ class QuestionsController < ApplicationController
 
   def update
     if @question.update(questions_params)
-      redirect_to @question
+      flash[:notice] = 'Вопрос успешно обновлен'
     else
-      render :edit
+      flash[:alert] = 'Обновить не удалось'
     end
   end
 
