@@ -22,6 +22,10 @@ RSpec.describe QuestionsController, type: :controller do
 
     before { get :show, id: question }
 
+    it 'assigns attachment build' do
+      expect(assigns(:answer).attachments.first).to be_a_new(Attachment)
+    end
+
     it 'get one question by id' do
       expect(assigns(:question)).to eq question
     end
@@ -39,6 +43,10 @@ RSpec.describe QuestionsController, type: :controller do
     sign_in_user
 
     before { get :new }
+
+    it 'assigns attachment build' do
+      expect(assigns(:question).attachments.first).to be_a_new(Attachment)
+    end
 
     it 'get a new question object' do
       expect(assigns(:question)).to be_a_new(Question)
@@ -101,35 +109,35 @@ RSpec.describe QuestionsController, type: :controller do
     context 'valid attributes' do
 
       it 'find question by id' do
-        patch :update, id: question, question: attributes_for(:question)
+        patch :update, id: question, question: attributes_for(:question), format: :js
         expect(assigns(:question)).to eq question
       end
 
       it 'change question attribute' do
-        patch :update, id: question, question: { title: 'New Title', body: 'New Body' }
+        patch :update, id: question, question: { title: 'New Title', body: 'New Body' }, format: :js
         question.reload
         expect(question.title).to eq 'New Title'
         expect(question.body).to eq 'New Body'
       end
 
       it 'redirect to the updated question' do
-        patch :update, id: question, question: attributes_for(:question)
-        expect(response).to redirect_to :question
+        patch :update, id: question, question: attributes_for(:question), format: :js
+        expect(response).to render_template 'questions/update'
       end
     end
 
     context 'not valid attibutes' do
 
       it 'it does not update the question' do
-        patch :update, id: question, question: attributes_for(:invalid_question)
+        patch :update, id: question, question: attributes_for(:invalid_question), format: :js
         question.reload
         expect(question.title).to eq question.title
         expect(question.body).to eq question.body
       end
 
       it 'render edit view' do
-        patch :update, id: question, question: attributes_for(:invalid_question)
-        expect(response).to render_template :edit
+        patch :update, id: question, question: attributes_for(:invalid_question), format: :js
+        expect(response).to render_template 'questions/update'
       end
 
     end

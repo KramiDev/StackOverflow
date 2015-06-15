@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../acceptance_helper'
 
 feature 'Create question', %q{
   In order to be able to find a solution problem
@@ -14,9 +14,12 @@ feature 'Create question', %q{
 
     visit questions_path
     click_on 'Задать вопрос'
-    fill_in 'Сформулируйте суть своего вопроса', with: 'Заголовок для вопроса'
-    fill_in 'Опишите подробно свой вопрос', with: 'Тело для вопроса'
-    click_on 'Задать вопрос'
+
+    within '#new_question' do
+      fill_in 'Сформулируйте суть своего вопроса', with: 'Заголовок для вопроса'
+      fill_in 'Опишите подробно свой вопрос', with: 'Тело для вопроса'
+      click_on 'Задать вопрос'
+    end
 
     expect(page).to have_content 'Заголовок для вопроса'
     expect(page).to have_content 'Тело для вопроса'

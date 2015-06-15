@@ -8,10 +8,12 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = @question.answers.build
+    @answer.attachments.build
   end
 
   def new
     @question = Question.new
+    @question.attachments.build
   end
 
   def edit
@@ -28,9 +30,9 @@ class QuestionsController < ApplicationController
 
   def update
     if @question.update(questions_params)
-      redirect_to @question
+      flash[:notice] = 'Вопрос успешно обновлен'
     else
-      render :edit
+      flash[:alert] = 'Обновить не удалось'
     end
   end
 
@@ -50,6 +52,6 @@ class QuestionsController < ApplicationController
   end
 
   def questions_params
-    params.require(:question).permit(:title, :body)
+    params.require(:question).permit(:title, :body, attachments_attributes: [:id, :file, :_destroy])
   end
 end

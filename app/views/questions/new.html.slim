@@ -10,5 +10,11 @@
         .form-group
           = f.label :body, 'Опишите подробно свой вопрос'
           = f.text_area :body, class: 'form-control'
+        = f.fields_for :attachments do |a|
+          .form-group
+            = render 'questions/attachment_fields', :f => a
+            = link_to_add_association 'Добавить файл', f, :attachments
         .form-group
           = f.submit 'Задать вопрос', class: 'btn btn-primary btn-sm'
+
+
