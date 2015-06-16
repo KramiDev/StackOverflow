@@ -1,0 +1,23 @@
+nav.navbar.navbar-default
+  .container-fluid
+    .navbar-header
+      button(type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1")
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      = link_to 'StackOverflow', root_path, class: 'navbar-brand'
+    .collapse.navbar-collapse#bs-example-navbar-collapse-1
+      ul.nav.navbar-nav.navbar-right
+        li
+          = link_to 'Главная', root_path
+        li
+          = link_to 'Все вопросы', questions_path
+        - if current_user
+          li
+            = link_to 'Выйти', destroy_user_session_path, method: :delete
+        - else
+          li
+            = link_to 'Регистрация', new_user_registration_path
+          li
+            = link_to 'Войти на сайт', new_user_session_path

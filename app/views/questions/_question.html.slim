@@ -1,0 +1,6 @@
+.row
+  .col-md-12.question-block
+    h4.pull-left
+      = link_to question.title, question
+    h4.pull-right
+      = link_to question.created_at.strftime('%d/%m/%Y в %H:%M'), question

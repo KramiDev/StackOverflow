@@ -1,0 +1,20 @@
+clearAlertAndNotice();
+$('#edit_answer_<%= @answer.id %> .answer-error').html('');
+<% if @answer.errors.present? %>
+    <% @answer.errors.full_messages.each do |msg| %>
+        $('#edit_answer_<%= @answer.id %> .answer-error').append('<%= msg %> <br/>');
+    <% end %>
+    <% if flash[:alert] %>
+        $('.alert').append('<br/> <%= flash[:alert] %>');
+        <% flash[:alert] = '' %>
+    <% end %>
+<% else %>
+    $('.answer-body-<%= @answer.id %>').html('<%= @answer.body %>');
+    $('#edit_answer_<%= @answer.id %>').hide();
+    <% if flash[:notice] %>
+        $('.notice').append('<br/> <%= flash[:notice] %>');
+        <% flash[:notice] = '' %>
+    <% end %>
+    $('.answer-delete-link').show();
+    answerEditLink();
+<% end %>
