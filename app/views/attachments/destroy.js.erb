@@ -1,0 +1,18 @@
+<% if flash[:alert] %>
+    $('.alert').append('<br/> <%= flash[:alert] %>');
+    <% flash[:alert] = '' %>
+<% end %>
+<% if flash[:notice] %>
+    $('.notice').append('<br/> <%= flash[:notice] %>');
+    <% flash[:notice] = '' %>
+<% end %>
+
+<% if @result.class.name == 'Question' %>
+    $('.attach-id-<%= @attach.id %>').remove();
+<% else %>
+    $('.attach-id-answer-<%= @attach.id %>').remove();
+<% end %>
+
+
+answerEditLink();
+questionEditLink();

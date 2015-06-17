@@ -3,7 +3,10 @@ class Answer < ActiveRecord::Base
   belongs_to :question
   belongs_to :user
 
-  default_scope { order(best: 'DESC', created_at: 'DESC') }
+  has_many :attachments, as: :attachable, dependent: :destroy
+  accepts_nested_attributes_for :attachments, allow_destroy: true
+
+  default_scope { order(best: 'DESC', created_at: 'ASC') }
 
 
   validates :body, :question_id, :user_id, presence: true

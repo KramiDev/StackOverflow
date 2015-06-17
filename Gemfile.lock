@@ -60,8 +60,14 @@ GEM
     capybara-webkit (1.5.2)
       capybara (>= 2.3.0, < 2.5.0)
       json
+    carrierwave (0.10.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
     celluloid (0.16.0)
       timers (~> 4.0.0)
+    cocoon (1.2.6)
     coderay (1.1.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
@@ -185,6 +191,7 @@ GEM
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
     rdoc (4.2.0)
+    remotipart (1.2.1)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
     rspec (3.3.0)
@@ -271,6 +278,8 @@ DEPENDENCIES
   byebug
   capybara
   capybara-webkit
+  carrierwave
+  cocoon
   coffee-rails (~> 4.1.0)
   database_cleaner
   devise
@@ -284,6 +293,7 @@ DEPENDENCIES
   pg
   rails (= 4.2.1)
   rails-assets-bootstrap-sass!
+  remotipart
   rspec-rails
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)

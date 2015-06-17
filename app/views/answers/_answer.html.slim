@@ -19,6 +19,16 @@
       .row
         .col-md-12(class='answer-body-#{answer.id}')
           = answer.body
+          br
+        .col-md-12
+          ul
+            - answer.attachments.each do |a|
+              li(class="attach-id-answer-#{a.id}")
+                = link_to a.file_identifier, a.file.url
+                = link_to ' Удалить файл', attachment_path(a), class: 'btn btn-danger btn-xs', method: :delete, remote: true if current_user and current_user.id == answer.user_id
+
+
+
       br
 
       ul.nav.nav-pills.navbar-right

@@ -5,6 +5,12 @@
         = @question.title
       p.question-body
         = @question.body
+      p
+        ul
+        - @question.attachments.each do |a|
+          li(class="attach-id-#{a.id}" )
+            = link_to a.file_identifier, a.file.url
+            = link_to ' Удалить файл', attachment_path(a), class: 'btn btn-danger btn-xs', method: :delete, remote: true if current_user and current_user.id == @question.user_id
     .col-md-12
       - if current_user and @question.user_id == current_user.id
         ul.nav.nav-pills.navbar-right
@@ -34,5 +40,9 @@
           .form-group
             = f.label :body, "Напишите свой ответ"
             = f.text_area :body, class: 'form-control'
+            = f.fields_for :attachments do |a|
+              .form-group
+                = render 'answers/attachment_fields', :f => a
+                = link_to_add_association 'Добавить файл', f, :attachments
           .form-group
             = f.submit 'Ответить', class: 'btn btn-primary btn-sm'

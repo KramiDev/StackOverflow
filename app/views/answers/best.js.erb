@@ -1,0 +1,8 @@
+clearAlertAndNotice();
+$('.answers').html('<%= j render @question.answers.order(best: 'DESC') %>');
+<% if flash[:notice] %>
+    $('.notice').append('<br/> <%= flash[:notice] %>');
+    <% flash[:notice] = '' %>
+<% end %>
+
+answerEditLink();

@@ -1,0 +1,5 @@
+.form-group(style="padding: 10px; border: 1px solid #cccccc; border-radius: 10px;" )
+  .field
+    = f.label :file, 'Файл'
+    = f.file_field :file
+  = link_to_remove_association "удалить файл", f

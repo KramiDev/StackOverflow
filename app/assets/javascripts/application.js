@@ -12,5 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.remotipart
+//= require cocoon
 //= require bootstrap-sass
 //= require_tree .

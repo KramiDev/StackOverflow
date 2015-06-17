@@ -1,0 +1,39 @@
+.question-block, .answer-block {
+  border: 1px solid #CCCCCC;
+  border-radius: 5px;
+  margin-top: 10px;
+  padding: 10px;
+}
+
+.question-form {
+  margin-top: 20px;
+}
+
+
+.notice, .alert {
+  font-size: 18px;
+  font-weight: bold;
+  position: fixed;
+  left: 20px;
+  top: 20px;
+  max-width: 250px;
+}
+
+#question-edit-form {
+  display: none;
+}
+
+.edit_answer {
+  display: none;
+}
+
+.question-error, .answer-error {
+  color: red;
+}
+
+.notice { color: green; }
+.alert { color: red; }
+
+.best {
+  border: 1px solid green !important;
+}
