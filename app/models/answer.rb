@@ -6,6 +6,8 @@ class Answer < ActiveRecord::Base
   has_many :attachments, as: :attachable, dependent: :destroy
   accepts_nested_attributes_for :attachments, allow_destroy: true
 
+  has_many :votes, as: :voteable, dependent: :destroy
+
   default_scope { order(best: 'DESC', created_at: 'ASC') }
 
 
