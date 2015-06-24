@@ -12,6 +12,12 @@
             = link_to a.file_identifier, a.file.url
             = link_to ' Удалить файл', attachment_path(a), class: 'btn btn-danger btn-xs', method: :delete, remote: true if current_user and current_user.id == @question.user_id
     .col-md-12
+      ul.nav.nav-pills.navbar-left.votes
+        - if current_user and current_user.id != @question.user_id
+          li
+            = link_to 'like', ''
+          li
+            = link_to 'dislike', ''
       - if current_user and @question.user_id == current_user.id
         ul.nav.nav-pills.navbar-right
           li
