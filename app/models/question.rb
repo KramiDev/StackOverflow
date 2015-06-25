@@ -13,4 +13,8 @@ class Question < ActiveRecord::Base
   def best_answer
     self.answers.where(best: true).first
   end
+
+  def likes_count
+    self.votes.sum(:like)
+  end
 end

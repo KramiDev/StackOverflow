@@ -9,7 +9,7 @@ feature 'Question like or dislike', %q{
   given(:users){ create_list(:user, 2) }
   given(:question){ create(:question, user: users[0]) }
 
-  scenario 'User try to like or dislike his question' do
+  scenario 'User try to like or dislike his question', js: true do
 
     sign_in(users[0])
     visit question_path(question)
@@ -21,7 +21,7 @@ feature 'Question like or dislike', %q{
 
   end
 
-  scenario 'User try to like other\'s question' do
+  scenario 'User try to like other\'s question', js: true do
     
     sign_in(users[1])
     visit question_path(question)
@@ -33,7 +33,7 @@ feature 'Question like or dislike', %q{
 
   end
 
-  scenario 'User try to dislike other\'s question' do
+  scenario 'User try to dislike other\'s question', js: true do
 
     sign_in(users[1])
     visit question_path(question)
@@ -45,7 +45,7 @@ feature 'Question like or dislike', %q{
 
   end
 
-  scenario 'Non-authenticated user try to like or dislike some question' do
+  scenario 'Non-authenticated user try to like or dislike some question', js: true do
 
       visit question_path(question)
 

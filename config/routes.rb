@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   devise_for :users
   resources :questions do
+    resources :votes, only: [:create]
+
     resources :answers, only: [:create, :update, :destroy] do
       post :best, on: :member
     end

@@ -14,5 +14,18 @@ RSpec.describe Question, type: :model do
   it { should validate_presence_of :user_id }
 
   it { should accept_nested_attributes_for :attachments }
+  
+  
+  let!(:question){ create(:question) }
+
+  describe '#likes_count' do
+         
+    before { question.votes.create!(like: 1) }
+
+    it 'Get all likes of question' do
+      expect(question.likes_count).to eq 1
+    end
+
+  end
 
 end
