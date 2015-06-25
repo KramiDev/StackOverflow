@@ -4,7 +4,7 @@ class VotesController < ApplicationController
   def create
     if params[:question_id]
       @question = Question.find(params[:question_id])
-      @like = @question.votes.new(like: params[:vote], user: current_user)
+      load_like(@question)
       respond_to do |format|
         if @like.save
           format.json { render json: { 
@@ -17,7 +17,7 @@ class VotesController < ApplicationController
       end
     elsif params[:answer_id]
       @answer = Answer.find(params[:answer_id])
-      @like = @answer.votes.new(like: params[:vote], user: current_user)
+      load_like(@answer)
       respond_to do |format|
         if @like.save
           format.json { render json: {
@@ -29,6 +29,12 @@ class VotesController < ApplicationController
         end
       end
     end
+  end
+
+  private
+
+  def load_like(model)
+    @like = model.votes.new(like: params[:vote], user: current_user)
   end
 
 end
