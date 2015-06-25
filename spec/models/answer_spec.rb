@@ -15,9 +15,9 @@ RSpec.describe Answer, type: :model do
   it { should accept_nested_attributes_for :attachments }
   it { should have_many(:votes).dependent(:destroy) }
 
-  let(:question) { create(:question) }
-  let(:answer) { create(:answer, question: question, best: false) }
-  let(:answer1) { create(:answer, question: question, best: false) }
+  let!(:question) { create(:question) }
+  let!(:answer) { create(:answer, question: question, best: false) }
+  let!(:answer1) { create(:answer, question: question, best: false) }
 
   describe '#best_answer' do
 
@@ -42,7 +42,16 @@ RSpec.describe Answer, type: :model do
 
   end
 
-  
+ describe '#likes_count' do
+         
+    before { answer.votes.create!(like: 1) }
+
+    it 'Get all likes of question' do
+      expect(answer.likes_count).to eq 1
+    end
+
+  end
+ 
 
 
 end
