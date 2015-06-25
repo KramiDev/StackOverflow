@@ -30,13 +30,14 @@
 
 
       br
-      ul.nav.nav-pills.answer-votes.pull-left
+      ul.nav.nav-pills.answer-votes.pull-left(id='answer-like-#{answer.id}')
+        li.likes Likes: #{answer.likes_count}
         - if current_user and answer.user_id != current_user.id
           li 
-            = link_to 'like', ''
+            = link_to 'like', votes_path(answer_id: answer, vote: 1), method: :post, remote: true, data: { type: :json }, class: 'answer-like'
           li
-            = link_to 'dislike', ''
-
+            = link_to 'dislike', votes_path(answer_id: answer, vote: -1), method: :post, remote: true, data: { type: :json }, class: 'answer-like'
+          li.errors
       ul.nav.nav-pills.pull-right
         - if current_user and current_user.id == answer.question.user_id && current_user.id != answer.user_id && !answer.best
           li

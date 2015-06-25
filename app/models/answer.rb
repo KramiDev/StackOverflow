@@ -21,4 +21,8 @@ class Answer < ActiveRecord::Base
     self.update!(best: true)
   end
 
+  def likes_count
+    self.votes.sum(:like)
+  end
+
 end

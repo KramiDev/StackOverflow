@@ -6,7 +6,7 @@ $ ->
   $('body').on 'cocoon:after-insert', (e, insertedItem) ->
     removeFileField()
 
-  $('#question-like').bind 'ajax:success', (e, data, status, xhr) ->
+  $('.question-like').bind 'ajax:success', (e, data, status, xhr) ->
     $('.votes li.likes').html('Likes: ' + xhr.responseJSON.likes_count)
   .bind 'ajax:error', (e, xhr, status, error) ->
     $('.votes li.errors').html('')
@@ -14,14 +14,12 @@ $ ->
     $.each errors,(index, value) ->
       $('.votes li.errors').append(value)
 
-  $('#question-dislike').bind 'ajax:success', (e, data, status, xhr) ->
-    $('.votes li.likes').html('Likes: ' + xhr.responseJSON.likes_count)
+  $('.answer-like').bind 'ajax:success', (e, data, status, xhr) ->
+    $('#answer-like-' + xhr.responseJSON.like.voteable_id + ' .likes').html('Likes: ' + xhr.responseJSON.likes_count)
   .bind 'ajax:error', (e, xhr, status, error) ->
-    $('.votes li.errors').html('')
-    errors = $.parseJSON(xhr.responseText)
-    $.each errors,(index, value) ->
-      $('.votes li.errors').append(value)
-
+    $('#answer-like-' + xhr.responseJSON.like.voteable_id + ' .errors').html('')
+    $.each xhr.responseJSON.errors, (index, value) ->
+      $('#answer-like-' + xhr.responseJSON.like.voteable_id + ' li.errors').append(value)
 
 window.clearAlertAndNotice = ->
   $('.notice').html('')

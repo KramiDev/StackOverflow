@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   resources :attachments, only: [:destroy]
 
   devise_for :users
+  resources :votes, only: [:create]
   resources :questions do
-    resources :votes, only: [:create]
 
     resources :answers, only: [:create, :update, :destroy] do
       post :best, on: :member

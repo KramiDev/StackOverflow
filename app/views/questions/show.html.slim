@@ -16,9 +16,9 @@
         li.likes Likes: #{@question.likes_count}
         - if current_user and current_user.id != @question.user_id
           li
-            = link_to 'like', question_votes_path(question_id: @question, vote: 1), method: :post, remote: true, data: { type: :json }, id: 'question-like'
+            = link_to 'like', votes_path(question_id: @question, vote: 1), method: :post, remote: true, data: { type: :json }, class: 'question-like'
           li
-            = link_to 'dislike', question_votes_path(question_id: @question, vote: -1), method: :post, remote: true, data: { type: :json }, id: 'question-dislike'
+            = link_to 'dislike', votes_path(question_id: @question, vote: -1), method: :post, remote: true, data: { type: :json }, class: 'question-like'
           li.errors
       - if current_user and @question.user_id == current_user.id
         ul.nav.nav-pills.navbar-right

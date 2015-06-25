@@ -32,7 +32,7 @@ feature 'Answer like or dislike', %q{
     end
   end
 
-  scenario 'User try to dislike other\'s answer' do
+  scenario 'User try to dislike other\'s answer', js: true do
     sign_in(users[1])
     visit question_path(question)
 
