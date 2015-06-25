@@ -19,8 +19,8 @@
       .row
         .col-md-12(class='answer-body-#{answer.id}')
           = answer.body
-          br
-        .col-md-12
+          br 
+        .col-md-6
           ul
             - answer.attachments.each do |a|
               li(class="attach-id-answer-#{a.id}")
@@ -30,8 +30,14 @@
 
 
       br
+      ul.nav.nav-pills.answer-votes.pull-left
+        - if current_user and answer.user_id != current_user.id
+          li 
+            = link_to 'like', ''
+          li
+            = link_to 'dislike', ''
 
-      ul.nav.nav-pills.navbar-right
+      ul.nav.nav-pills.pull-right
         - if current_user and current_user.id == answer.question.user_id && current_user.id != answer.user_id && !answer.best
           li
             = link_to 'Выбрать лучшим', best_question_answer_path(answer.question, answer), method: :post, remote: true
