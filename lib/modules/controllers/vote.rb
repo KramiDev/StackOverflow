@@ -2,6 +2,7 @@ module Modules::Controllers::Vote
 
     def respond_like_json(model)
       like = load_like(model)
+      check_like(model)
       respond_to do |format|
         if like.save
           format.json { render json: {
@@ -15,6 +16,11 @@ module Modules::Controllers::Vote
     end
 
     private
+
+    def check_like(model)
+      like = model.votes.where(user_id: current_user.id).first
+      like.destroy if like
+    end
 
     def load_like(model)
       vote_type = params[:vote] == 'up' ? 1 : -1

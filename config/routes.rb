@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   resources :attachments, only: [:destroy]
 
   devise_for :users
-  resources :votes, only: [:create]
+  resources :votes, only: [:create] do
+    post :cancel, on: :member
+  end
   resources :questions do
 
     resources :answers, only: [:create, :update, :destroy] do

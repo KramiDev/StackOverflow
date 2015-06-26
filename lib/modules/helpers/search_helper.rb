@@ -5,4 +5,5 @@ module Modules::Helpers::SearchHelper
     self.votes.sum(:like)
   end
 
+
 end

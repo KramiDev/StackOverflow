@@ -12,6 +12,9 @@ $ ->
     clearAlertAndNotice()
     $('.alert').append('Ошибка загрузки. Возможно вы уже проголосовали.')
 
+
+
+
   $('.answer-like').bind 'ajax:success', (e, data, status, xhr) ->
     $('#answer-like-' + xhr.responseJSON.like.voteable_id + ' .likes').html('Likes: ' + xhr.responseJSON.likes_count)
   .bind 'ajax:error', (e, xhr, status, error) ->
@@ -39,3 +42,4 @@ window.removeFileField = ->
     e.preventDefault()
     $(this).parent('.form-group').remove()
     removeFileField()
+
