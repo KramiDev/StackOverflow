@@ -1,4 +1,6 @@
 class Answer < ActiveRecord::Base
+  include Modules::Helpers::SearchHelper
+
 
   belongs_to :question
   belongs_to :user
@@ -21,8 +23,5 @@ class Answer < ActiveRecord::Base
     self.update!(best: true)
   end
 
-  def likes_count
-    self.votes.sum(:like)
-  end
 
 end

@@ -1,5 +1,4 @@
-module Modules
-  module Vote
+module Modules::Controllers::Vote
 
     def respond_like_json(model)
       like = load_like(model)
@@ -23,4 +22,3 @@ module Modules
     end
 
   end
-end
