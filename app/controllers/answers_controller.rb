@@ -23,7 +23,7 @@ class AnswersController < ApplicationController
 
   def best
     if current_user.id == @question.user_id
-      @answer.best_answer
+      @answer.check_best
       flash[:notice] = 'Ответ ' + author_email(@answer) + ' был выбран лучшим'
     end
   end

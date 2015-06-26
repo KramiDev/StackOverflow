@@ -17,7 +17,7 @@ class Answer < ActiveRecord::Base
   validates :body, length: { minimum: 3, maximum: 1000 }
 
 
-  def best_answer
+  def check_best
     best = self.question.best_answer
     best.update!(best: false) if best
     self.update!(best: true)
