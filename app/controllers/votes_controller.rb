@@ -1,40 +1,18 @@
 class VotesController < ApplicationController
   before_action :authenticate_user!
+  before_action :load_vote, only: [:create]
+
+  include Modules::Vote
+
 
   def create
-    if params[:question_id]
-      @question = Question.find(params[:question_id])
-      load_like(@question)
-      respond_to do |format|
-        if @like.save
-          format.json { render json: { 
-            like: @like,
-            likes_count: @question.likes_count
-          } }
-        else
-          format.json { render json: @like.errors.full_messages, status: :unprocessable_entity }
-        end
-      end
-    elsif params[:answer_id]
-      @answer = Answer.find(params[:answer_id])
-      load_like(@answer)
-      respond_to do |format|
-        if @like.save
-          format.json { render json: {
-            like: @like,
-            likes_count: @answer.likes_count
-          } }
-        else
-          format.json { render json: { like: @like, errors: @like.errors.full_messages }, status: :unprocessable_entity }
-        end
-      end
-    end
+    respond_like_json(@vote)
   end
 
   private
 
-  def load_like(model)
-    @like = model.votes.new(like: params[:vote], user: current_user)
+  def load_vote
+    @vote =  params[:question_id] ? Question.find(params[:question_id]) : Answer.find(params[:answer_id])
   end
 
 end
