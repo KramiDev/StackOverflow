@@ -9,17 +9,14 @@ $ ->
   $('.question-like').bind 'ajax:success', (e, data, status, xhr) ->
     $('.votes li.likes').html('Likes: ' + xhr.responseJSON.likes_count)
   .bind 'ajax:error', (e, xhr, status, error) ->
-    $('.votes li.errors').html('')
-    errors = $.parseJSON(xhr.responseText)
-    $.each errors,(index, value) ->
-      $('.votes li.errors').append(value)
+    clearAlertAndNotice()
+    $('.alert').append('Ошибка загрузки. Возможно вы уже проголосовали.')
 
   $('.answer-like').bind 'ajax:success', (e, data, status, xhr) ->
     $('#answer-like-' + xhr.responseJSON.like.voteable_id + ' .likes').html('Likes: ' + xhr.responseJSON.likes_count)
   .bind 'ajax:error', (e, xhr, status, error) ->
-    $('#answer-like-' + xhr.responseJSON.like.voteable_id + ' .errors').html('')
-    $.each xhr.responseJSON.errors, (index, value) ->
-      $('#answer-like-' + xhr.responseJSON.like.voteable_id + ' li.errors').append(value)
+    clearAlertAndNotice()
+    $('.alert').append('Ошибка загрузки. Возможно вы уже проголосовали.')
 
 window.clearAlertAndNotice = ->
   $('.notice').html('')

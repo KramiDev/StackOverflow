@@ -10,7 +10,7 @@ module Modules
                                    likes_count: model.likes_count
                                } }
         else
-          format.json { render json: like.errors.full_messages, status: :unprocessable_entity }
+          format.json { render json: like, status: :unprocessable_entity }
         end
       end
     end
@@ -18,7 +18,8 @@ module Modules
     private
 
     def load_like(model)
-      model.votes.new(like: params[:vote], user: current_user)
+      vote_type = params[:vote] == 'up' ? 1 : -1
+      model.votes.new(like: vote_type, user: current_user)
     end
 
   end
