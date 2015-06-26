@@ -20,11 +20,11 @@ RSpec.describe Answer, type: :model do
   let!(:answer) { create(:answer, question: question, best: false) }
   let!(:answer1) { create(:answer, question: question, best: false) }
 
-  describe '#best_answer' do
+  describe '#check_best' do
 
     it 'Question does\'t have best answer' do
 
-      answer.best_answer
+      answer.check_best
 
       expect(answer.best).to be true
 
@@ -34,7 +34,7 @@ RSpec.describe Answer, type: :model do
 
     it 'Question have 1 best answer' do
 
-      answer.best_answer
+      answer.check_best
       answer1.reload
       expect(answer.best).to be true
       expect(answer1.best).to be false
