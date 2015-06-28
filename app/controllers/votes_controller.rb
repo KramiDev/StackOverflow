@@ -10,7 +10,7 @@ class VotesController < ApplicationController
   end
 
   def destroy
-    @vote.find_like.destroy
+    find_like(@vote).destroy
     respond_to do |format|
       format.json do
          render json:

@@ -4,18 +4,14 @@ $ ->
   removeFileField()
   questionCancel()
   answerCancel()
+  questionlike()
+  answerLike()
 
   $('body').on 'cocoon:after-insert', (e, insertedItem) ->
     removeFileField()
 
-  $('.question-like').bind 'ajax:success', (e, data, status, xhr) ->
-    $('.votes li.likes').html('Likes: ' + xhr.responseJSON.likes_count)
-    $('li.cancel').html('<a class="question-cancel" data-type="json" data-remote="true" rel="nofollow" data-method="delete" href="/votes/1?question_id=1">Отменить выбор</a>')
-    questionCancel()
-  .bind 'ajax:error', (e, xhr, status, error) ->
-    clearAlertAndNotice()
-    $('.alert').append('Ошибка загрузки. Возможно вы уже проголосовали.')
 
+window.answerLike = ->
   $('.answer-like').bind 'ajax:success', (e, data, status, xhr) ->
     $('#answer-like-' + xhr.responseJSON.like.voteable_id + ' .likes').html('Likes: ' + xhr.responseJSON.likes_count)
     $('#answer-like-' + xhr.responseJSON.like.voteable_id + ' .cancel').html('<a class="answer-cancel" data-type="json" data-remote="true" rel="nofollow" data-method="delete" href="/votes/1?answer_id=' + xhr.responseJSON.like.voteable_id + '">Отменить выбор</a>')
@@ -25,7 +21,14 @@ $ ->
     answerCancel()
     $('.alert').append('Ошибка загрузки. Возможно вы уже проголосовали.')
 
-
+window.questionlike = ->
+  $('.question-like').bind 'ajax:success', (e, data, status, xhr) ->
+    $('.votes li.likes').html('Likes: ' + xhr.responseJSON.likes_count)
+    $('.votes li.cancel').html('<a class="question-cancel" data-type="json" data-remote="true" rel="nofollow" data-method="delete" href="/votes/1?question_id=1">Отменить выбор</a>')
+    questionCancel()
+  .bind 'ajax:error', (e, xhr, status, error) ->
+    questionCancel()
+    $('.alert').append('Ошибка загрузки. Возможно вы уже проголосовали.')
 
 window.answerCancel = ->
   $('.answer-cancel').bind 'ajax:success', (e, data, status, xhr) ->
@@ -36,7 +39,7 @@ window.answerCancel = ->
 window.questionCancel = ->
   $('.question-cancel').bind 'ajax:success', (e, data, status, xhr) ->
     $('.votes li.likes').html('Likes: ' + xhr.responseJSON.likes_count)
-    $('li.cancel').html('')
+    $('.votes li.cancel').html('')
   .bind 'ajax:error', (e, xhr, status, error) ->
     clearAlertAndNotice()
     $('.alert').append('Удалить не удалось. Попробуйте позже')

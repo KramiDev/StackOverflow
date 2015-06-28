@@ -23,6 +23,7 @@ feature 'Answer like or dislike', %q{
   end
 
   scenario 'User try to like other\'s answer', js: true do
+
     sign_in(users[1])
     visit question_path(question)
 

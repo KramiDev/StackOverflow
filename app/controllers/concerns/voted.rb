@@ -3,7 +3,7 @@ module Voted
 
   def respond_like_json(model)
     like = load_like(model)
-    find_like.destroy if find_like(model)
+    find_like(model).destroy if find_like(model)
     respond_to do |format|
       if like.save
         format.json do
