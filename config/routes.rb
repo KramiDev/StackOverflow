@@ -5,21 +5,12 @@ Rails.application.routes.draw do
   devise_for :users
   resources :votes, only: [:create, :destroy]
 
-  # resources :questions, concerns: :voteable do
-  #   resources :answers, only: [:create, :update, :destroy], concerns: :voteable do
-  #     post :best, on: :member
-  #   end
-  # end
-
   resources :questions do
     resources :answers, only: [:create, :update, :destroy] do
       post :best, on: :member
     end
   end
 
-  # concern :voteable do
-  #   resource :votes, [:create, :destroy]
-  # end
 
 
 

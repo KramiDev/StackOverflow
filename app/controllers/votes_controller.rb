@@ -1,6 +1,6 @@
 class VotesController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_vote, only: [:create]
+  before_action :load_vote, only: [:create, :destroy]
 
   include Voted
 
@@ -9,11 +9,16 @@ class VotesController < ApplicationController
     respond_like_json(@vote)
   end
 
-  def cancel
-    @question = Question.find(params[:question_id])
-    @question.votes.where(user_id: current_user.id).first.destroy
+  def destroy
+    @vote.votes.where(user_id: current_user.id).first.destroy
+    likes_count = @vote.likes_count
     respond_to do |format|
-      format.json { render json: {status: :success} }
+      format.json do
+         render json:
+                    { likes_count: likes_count,
+                      status: :success
+                    }
+      end
     end
   end
 

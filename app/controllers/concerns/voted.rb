@@ -18,6 +18,11 @@ module Voted
     end
   end
 
+  def load_like(model)
+    vote_type = params[:vote] == 'up' ? 1 : -1
+    model.votes.new(like: vote_type, user: current_user)
+  end
+
   private
 
   def check_like(model)
@@ -25,10 +30,7 @@ module Voted
     like.destroy if like
   end
 
-  def load_like(model)
-    vote_type = params[:vote] == 'up' ? 1 : -1
-    model.votes.new(like: vote_type, user: current_user)
-  end
+
 
 
 end
