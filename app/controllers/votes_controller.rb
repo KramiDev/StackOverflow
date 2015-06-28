@@ -2,7 +2,7 @@ class VotesController < ApplicationController
   before_action :authenticate_user!
   before_action :load_vote, only: [:create]
 
-  include Modules::Controllers::Vote
+  include Voted
 
 
   def create

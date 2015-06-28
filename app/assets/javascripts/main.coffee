@@ -8,6 +8,7 @@ $ ->
 
   $('.question-like').bind 'ajax:success', (e, data, status, xhr) ->
     $('.votes li.likes').html('Likes: ' + xhr.responseJSON.likes_count)
+    $('li.cancel').html('<a href="">Отменить выбор</a>')
   .bind 'ajax:error', (e, xhr, status, error) ->
     clearAlertAndNotice()
     $('.alert').append('Ошибка загрузки. Возможно вы уже проголосовали.')
