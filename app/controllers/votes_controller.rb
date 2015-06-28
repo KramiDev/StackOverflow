@@ -11,11 +11,12 @@ class VotesController < ApplicationController
 
   def destroy
     @vote.votes.where(user_id: current_user.id).first.destroy
-    likes_count = @vote.likes_count
     respond_to do |format|
       format.json do
          render json:
-                    { likes_count: likes_count,
+                    {
+                      like: @vote,
+                      likes_count: @vote.likes_count,
                       status: :success
                     }
       end

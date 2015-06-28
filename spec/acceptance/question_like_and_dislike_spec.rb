@@ -56,4 +56,20 @@ feature 'Question like or dislike', %q{
 
   end
 
+
+  before { question.votes.create(user: users[1], like: 1) }
+
+  scenario 'User try to cancel his vote', js: true do
+
+    sign_in(users[1])
+
+    visit question_path(question)
+
+    within '.votes' do
+      click_on 'Отменить выбор'
+      expect(page).to have_content 'Likes: 0'
+    end
+
+  end
+
 end
