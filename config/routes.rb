@@ -3,11 +3,16 @@ Rails.application.routes.draw do
   resources :attachments, only: [:destroy]
 
   devise_for :users
+  resources :votes, only: [:create, :destroy]
+
   resources :questions do
     resources :answers, only: [:create, :update, :destroy] do
       post :best, on: :member
     end
   end
+
+
+
 
   root 'questions#index'
   # The priority is based upon order of creation: first created -> highest priority.

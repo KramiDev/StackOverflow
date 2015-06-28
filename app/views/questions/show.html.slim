@@ -12,6 +12,15 @@
             = link_to a.file_identifier, a.file.url
             = link_to ' Удалить файл', attachment_path(a), class: 'btn btn-danger btn-xs', method: :delete, remote: true if current_user and current_user.id == @question.user_id
     .col-md-12
+      ul.nav.nav-pills.navbar-left.votes
+        li.likes Likes: #{@question.likes_count}
+        - if current_user and current_user.id != @question.user_id
+          li
+            = link_to 'like', votes_path(question_id: @question, vote: 'up'), method: :post, remote: true, data: { type: :json }, class: 'question-like'
+          li
+            = link_to 'dislike', votes_path(question_id: @question, vote: 'down'), method: :post, remote: true, data: { type: :json }, class: 'question-like'
+          li.cancel
+            = link_to 'Отменить выбор', vote_path(question_id: @question), method: :delete, remote: true, class: 'question-cancel', data: { type: :json } if User.check_like(@question, current_user)
       - if current_user and @question.user_id == current_user.id
         ul.nav.nav-pills.navbar-right
           li
