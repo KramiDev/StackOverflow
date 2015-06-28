@@ -10,7 +10,7 @@ class VotesController < ApplicationController
   end
 
   def destroy
-    @vote.votes.where(user_id: current_user.id).first.destroy
+    @vote.find_like.destroy
     respond_to do |format|
       format.json do
          render json:

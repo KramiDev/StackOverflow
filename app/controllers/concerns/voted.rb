@@ -3,7 +3,7 @@ module Voted
 
   def respond_like_json(model)
     like = load_like(model)
-    check_like(model)
+    find_like.destroy if find_like(model)
     respond_to do |format|
       if like.save
         format.json do
@@ -23,11 +23,8 @@ module Voted
     model.votes.new(like: vote_type, user: current_user)
   end
 
-  private
-
-  def check_like(model)
-    like = model.votes.where(user_id: current_user.id).first
-    like.destroy if like
+  def find_like(model)
+    model.votes.where(user_id: current_user.id).first
   end
 
 
