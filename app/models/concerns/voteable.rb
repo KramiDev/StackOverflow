@@ -11,4 +11,6 @@ module Voteable
     self.votes.sum(:like)
   end
 
+
+
 end
