@@ -14,6 +14,8 @@ gem 'devise'
 gem 'carrierwave'
 gem 'remotipart'
 gem 'cocoon'
+gem 'thin'
+gem 'private_pub'
 
 group :development, :test do
   gem 'byebug'
@@ -21,7 +23,6 @@ group :development, :test do
   gem 'spring'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
-  gem 'thin'
   gem 'guard'
   gem 'guard-bundler', require: false
   gem 'guard-rspec', require: false

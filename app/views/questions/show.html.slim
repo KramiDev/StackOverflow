@@ -55,3 +55,5 @@
                 = link_to_add_association 'Добавить файл', f, :attachments
           .form-group
             = f.submit 'Ответить', class: 'btn btn-primary btn-sm'
+
+= subscribe_to "/questions/#{@question.id}/answers"

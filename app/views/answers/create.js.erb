@@ -12,9 +12,33 @@ clearAlertAndNotice();
         $('.notice').append('<%= flash[:notice] %>');
         <%= flash[:notice] = '' %>
     <% end %>
-    $('.answers').append('<%= j render @answer %>');
     $('.main-answer #answer_body').val('');
+    <% publish_to "/questions/#{@question.id}/answers" do %>
+        $('.answers').append('<%= j render @answer %>');
+        if ($('variables')) {
+            current_user = $(".variables").data('user-id');
+            if (current_user != <%= @answer.user_id %>) {
+                $('.answer-<%= @answer.id %> .edit-links').remove();
+            }
+            if (current_user == <%= @question.user_id %>) {
+                $('.answer-<%= @answer.id %> .answer-votes').append('<li><a data-type="json" class="answer-like" data-remote="true" rel="nofollow" data-method="post" href="/votes?answer_id=<%= @answer.id %>&amp;vote=up">like</a></li>');
+                $('.answer-<%= @answer.id %> .answer-votes').append('<li><a data-type="json" class="answer-like" data-remote="true" rel="nofollow" data-method="post" href="/votes?answer_id=<%= @answer.id %>&amp;vote=down">dislike</a></li>');
+                $('.answer-<%= @answer.id %> .answer-votes').append('<li class="cancel"></li>');
+
+                $('.answer-<%= @answer.id %> .answer-edit').append('<li class="best_answer"><a data-remote="true" rel="nofollow" data-method="post" href="/questions/<%= @question.id %>/answers/<%= @answer.id %>/best">Выбрать лучшим</a></li>')
+            }
+        }
+        questionlike();
+        questionCancel();
+        answerLike();
+        answerCancel();
+    <% end %>
+
 
 <% end %>
+questionlike();
+questionCancel();
+answerLike();
+answerCancel();
 questionEditLink();
 answerEditLink();

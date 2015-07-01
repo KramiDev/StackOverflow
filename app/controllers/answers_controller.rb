@@ -6,7 +6,17 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.new(answers_params.merge(user: current_user))
-    @answer.save ? flash[:notice] = 'Ответ успешно добавлен' : flash[:alert] = 'Ответ не сохранен'
+    respond_to do |format|
+      if @answer.save
+        question_author = @question.user_id
+        answer_author = @answer.user_id
+        @result = { question_author: question_author, answer_author: answer_author }
+        format.js { }
+      else
+        format.js { }
+      end
+    end
+    # @answer.save ? flash[:notice] = 'Ответ успешно добавлен' : flash[:alert] = 'Ответ не сохранен'
   end
 
   def update
