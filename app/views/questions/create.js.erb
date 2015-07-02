@@ -1,7 +1,11 @@
 <% if @question.errors.any? %>
+    $(".question-form .errors").html('');
+    <% @question.errors.full_messages.each do |msg| %>
+        $(".question-form .errors").prepend('<%= j msg %><br />');
+    <% end %>
 <% else %>
     $(window.location.replace("/questions/<%= @question.id %>"));
     <% publish_to '/questions/index' do %>
-        $('.questions').append('<%= j render @question %>');
+        $('.questions').prepend('<%= j render @question %>');
     <% end %>
 <% end %>

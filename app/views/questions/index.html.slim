@@ -1,5 +1,6 @@
-.container-fluid.questions
+.container-fluid
   h3 Последние вопросы
-  = render @questions
+  .questions
+    = render @questions
 
 = subscribe_to "/questions/index"

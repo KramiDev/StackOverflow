@@ -21,12 +21,9 @@ class QuestionsController < ApplicationController
 
   def create
     @question = Question.new(questions_params.merge(user: current_user))
+    @question.save
     respond_to do |format|
-      if @question.save
-        format.js {}
-      else
-        render 'new'
-      end
+      format.js {}
     end
   end
 

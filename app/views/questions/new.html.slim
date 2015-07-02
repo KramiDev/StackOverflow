@@ -1,6 +1,7 @@
 .row
   .col-md-4.col-md-offset-4
     .question-form
+      .errors
       = form_for @question, remote: true do |f|
         h3 Задать свой вопрос
         br
