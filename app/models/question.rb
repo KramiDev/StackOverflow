@@ -3,6 +3,7 @@ class Question < ActiveRecord::Base
   include Attachable
 
   has_many :answers, dependent: :destroy
+  has_many :comments, as: :commentable, dependent: :destroy
   belongs_to :user
 
   default_scope { order(created_at: 'DESC') }
