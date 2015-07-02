@@ -6,5 +6,4 @@ FactoryGirl.define do
   factory :dislike do
     like -1
   end
-
 end

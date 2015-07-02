@@ -1,0 +1,7 @@
+<% if @question.errors.any? %>
+<% else %>
+    $(window.location.replace("/questions/<%= @question.id %>"));
+    <% publish_to '/questions/index' do %>
+        $('.questions').append('<%= j render @question %>');
+    <% end %>
+<% end %>

@@ -4,7 +4,6 @@ feature 'Delete file', %q{
   In order to be able to destroy file
   As an author
 } do
-
   given!(:user){ create(:user) }
   given!(:question){ create(:question, user: user) }
 
@@ -14,13 +13,9 @@ feature 'Delete file', %q{
   end
 
   scenario 'Author delete own file', js: true do
-
     within '.answers' do
       click_on 'Удалить файл'
     end
-
     expect(page).to_not have_link 'rails_helper.rb', href: "/uploads/attachment/file/1/rails_helper.rb"
-
   end
-
 end

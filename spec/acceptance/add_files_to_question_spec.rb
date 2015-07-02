@@ -5,18 +5,15 @@ feature 'Add files to question', %q{
     As an question's author
     I'd like to be able to attach files
 } do
-
   given(:user) { create(:user) }
   given(:question) { create(:question, user: user) }
 
   background do
-
     sign_in(user)
     visit new_question_path
   end
 
   scenario 'User add file when ask question', js: true do
-
     within '#new_question' do
       fill_in 'Сформулируйте суть своего вопроса', with: 'Заголовок для вопроса'
       fill_in 'Опишите подробно свой вопрос', with: 'Тело для вопроса'
@@ -30,7 +27,5 @@ feature 'Add files to question', %q{
 
     expect(page).to have_link 'spec_helper.rb', "/uploads/attachment/file/1/spec_helper.rb"
     expect(page).to have_link 'rails_helper.rb',  "/uploads/attachment/file/1/rails_helper.rb"
-
   end
-
 end

@@ -28,6 +28,7 @@ group :development, :test do
   gem 'guard-rspec', require: false
   gem 'capybara-webkit'
   gem 'database_cleaner'
+  gem 'rubocop', require: false
 end
 
 group :test do

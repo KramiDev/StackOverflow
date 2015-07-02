@@ -5,13 +5,11 @@ feature 'Best answer', %q{
   As an author of question
   I want to select best answer
 } do
-
   given!(:user) { create(:user) }
   given!(:question) { create(:question, user: user) }
   given!(:answer) { create(:answer, question: question) }
 
   scenario 'Author select best answer', js: true do
-
     sign_in(user)
 
     visit question_path(question)
@@ -22,7 +20,5 @@ feature 'Best answer', %q{
 
     expect(page).to have_content 'Отмечен решением'
     expect(page).to_not have_content 'Выбрать лучшим'
-
   end
-
 end

@@ -1,5 +1,4 @@
 FactoryGirl.define do
-
   sequence :title do |n|
     "MyTitle#{n}"
   end

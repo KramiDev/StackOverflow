@@ -1,5 +1,4 @@
 FactoryGirl.define do
-
   sequence :body do |n|
     "MyText#{n}"
   end

@@ -24,7 +24,6 @@ clearAlertAndNotice();
                 $('.answer-<%= @answer.id %> .answer-votes').append('<li><a data-type="json" class="answer-like" data-remote="true" rel="nofollow" data-method="post" href="/votes?answer_id=<%= @answer.id %>&amp;vote=up">like</a></li>');
                 $('.answer-<%= @answer.id %> .answer-votes').append('<li><a data-type="json" class="answer-like" data-remote="true" rel="nofollow" data-method="post" href="/votes?answer_id=<%= @answer.id %>&amp;vote=down">dislike</a></li>');
                 $('.answer-<%= @answer.id %> .answer-votes').append('<li class="cancel"></li>');
-
                 $('.answer-<%= @answer.id %> .answer-edit').append('<li class="best_answer"><a data-remote="true" rel="nofollow" data-method="post" href="/questions/<%= @question.id %>/answers/<%= @answer.id %>/best">Выбрать лучшим</a></li>')
             }
         }

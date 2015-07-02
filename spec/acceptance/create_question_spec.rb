@@ -5,11 +5,9 @@ feature 'Create question', %q{
   As an user
   I want to be able to create a question
 } do
+  given!(:user) { create(:user) }
 
-    given!(:user) { create(:user) }
-
-  scenario 'Authenticated user try to create question' do
-
+  scenario 'Authenticated user try to create question', js: true do
     sign_in(user)
 
     visit questions_path
@@ -23,15 +21,10 @@ feature 'Create question', %q{
 
     expect(page).to have_content 'Заголовок для вопроса'
     expect(page).to have_content 'Тело для вопроса'
-
   end
 
-  scenario 'Non-authenticated user try to create question' do
-
+  scenario 'Non-authenticated user try to create question', js: true do
     visit questions_path
-
     expect(page).to_not have_link 'Задать вопрос'
-
   end
-
 end

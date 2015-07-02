@@ -1,14 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe AttachmentsController, type: :controller do
-
   sign_in_user
 
   let(:question) { create(:question, user: @user) }
 
 
   describe "DELETE #destroy" do
-
     before do
       question.attachments.create(attributes_for(:attachment))
     end
@@ -22,5 +20,4 @@ RSpec.describe AttachmentsController, type: :controller do
       expect(response).to render_template 'attachments/destroy'
     end
   end
-
 end

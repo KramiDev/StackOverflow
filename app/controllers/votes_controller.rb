@@ -40,5 +40,4 @@ class VotesController < ApplicationController
   def load_vote
     @vote =  params[:question_id] ? Question.find(params[:question_id]) : Answer.find(params[:answer_id])
   end
-
 end
