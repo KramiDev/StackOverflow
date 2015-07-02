@@ -4,7 +4,7 @@ feature 'Delete file', %q{
   In order to be able to destroy file
   As an author
 } do
-  given!(:user){ create(:user) }
+  given!(:user) { create(:user) }
 
   background do
     sign_in(user)

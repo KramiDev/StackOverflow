@@ -10,10 +10,10 @@ class VotesController < ApplicationController
       if like.save
         format.json do
           render json:
-                     {
-                        like: like,
-                        likes_count: @vote.likes_count
-                     }
+          {
+            like: like,
+            likes_count: @vote.likes_count
+          }
         end
       else
         format.json { render json: like, status: :unprocessable_entity }
@@ -22,15 +22,15 @@ class VotesController < ApplicationController
   end
 
   def destroy
-   Vote.first_like(@vote, current_user).destroy
+    Vote.first_like(@vote, current_user).destroy
     respond_to do |format|
       format.json do
-         render json:
-                    {
-                      like: @vote,
-                      likes_count: @vote.likes_count,
-                      status: :success
-                    }
+        render json:
+        {
+          like: @vote,
+          likes_count: @vote.likes_count,
+          status: :success
+        }
       end
     end
   end

@@ -32,7 +32,7 @@ feature 'Edit question', %q{
     end
   end
 
-  given!(:user1){ create(:user) }
+  given!(:user1) { create(:user) }
 
   scenario 'Non-author try to edit question' do
     sign_in(user1)

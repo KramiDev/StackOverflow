@@ -3,7 +3,6 @@ class AnswersController < ApplicationController
   before_action :find_question, only: [:create, :best]
   before_action :find_answer, only: [:best, :destroy, :update]
 
-
   def create
     @answer = @question.answers.new(answers_params.merge(user: current_user))
     respond_to do |format|
@@ -11,9 +10,9 @@ class AnswersController < ApplicationController
         question_author = @question.user_id
         answer_author = @answer.user_id
         @result = { question_author: question_author, answer_author: answer_author }
-        format.js { }
+        format.js {}
       else
-        format.js { }
+        format.js {}
       end
     end
     # @answer.save ? flash[:notice] = 'Ответ успешно добавлен' : flash[:alert] = 'Ответ не сохранен'

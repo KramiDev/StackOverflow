@@ -31,7 +31,6 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
-
   describe 'PATCH #update' do
     sign_in_user
 

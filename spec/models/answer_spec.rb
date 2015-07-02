@@ -11,7 +11,7 @@ RSpec.describe Answer, type: :model do
   it { should have_many(:votes).dependent(:destroy) }
   it { should accept_nested_attributes_for :attachments }
 
-  let!(:users){ create_list(:user, 4) }
+  let!(:users) { create_list(:user, 4) }
   let!(:question) { create(:question) }
   let!(:answer) { create(:answer, question: question, best: false) }
   let!(:answer1) { create(:answer, question: question, best: false) }
@@ -32,7 +32,7 @@ RSpec.describe Answer, type: :model do
     end
   end
 
- describe '#likes_count' do
+  describe '#likes_count' do
     before { answer.votes.create!(like: 1, user: users[0]) }
     before { answer.votes.create!(like: 1, user: users[1]) }
     before { answer.votes.create!(like: 1, user: users[2]) }

@@ -5,9 +5,9 @@ feature 'Answer like or dislike', %q{
   As an user
   I want to like or dislike answer
 } do
-  given!(:users){ create_list(:user, 2) }
-  given!(:question){ create(:question) }
-  given!(:answer){ create(:answer, question: question, user: users[0]) }
+  given!(:users) { create_list(:user, 2) }
+  given!(:question) { create(:question) }
+  given!(:answer) { create(:answer, question: question, user: users[0]) }
 
   scenario 'User try like or dislike his answer' do
     sign_in(users[0])

@@ -11,8 +11,8 @@ RSpec.describe Question, type: :model do
   it { should validate_presence_of :user_id }
   it { should accept_nested_attributes_for :attachments }
 
-  let!(:users){ create_list(:user, 4) }
-  let!(:question){ create(:question) }
+  let!(:users) { create_list(:user, 4) }
+  let!(:question) { create(:question) }
 
   describe '#likes_count' do
     before { question.votes.create!(like: 1, user: users[0]) }

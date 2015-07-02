@@ -4,8 +4,8 @@ RSpec.describe VotesController, type: :controller do
   describe 'POST #create' do
     sign_in_user
 
-    let!(:question){ create(:question) }
-    let!(:answer){ create(:answer, question: question) }
+    let!(:question) { create(:question) }
+    let!(:answer) { create(:answer, question: question) }
 
     context 'User like question' do
       it 'Save like in db' do

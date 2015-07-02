@@ -5,8 +5,8 @@ feature 'Question like or dislike', %q{
   As an user
   I want to select good or bad question
 } do
-  given(:users){ create_list(:user, 2) }
-  given(:question){ create(:question, user: users[0]) }
+  given(:users) { create_list(:user, 2) }
+  given(:question) { create(:question, user: users[0]) }
 
   scenario 'User try to like or dislike his question', js: true do
     sign_in(users[0])

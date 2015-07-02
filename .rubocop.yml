@@ -64,7 +64,7 @@ Style/Documentation:
 # Offense count: 35
 # Cop supports --auto-correct.
 Style/EmptyLines:
-  Enabled: false
+  Enabled: true
 
 # Offense count: 214
 # Cop supports --auto-correct.
@@ -92,7 +92,7 @@ Style/EmptyLinesAroundModuleBody:
 # Offense count: 2
 # Configuration parameters: Exclude.
 Style/FileName:
-  Enabled: false
+  Enabled: true
 
 # Offense count: 4
 # Configuration parameters: MinBodyLength.
@@ -109,19 +109,19 @@ Style/HashSyntax:
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 Style/IndentHash:
-  Enabled: false
+  Enabled: true
 
 # Offense count: 4
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 Style/IndentationConsistency:
-  Enabled: false
+  Enabled: true
 
 # Offense count: 4
 # Cop supports --auto-correct.
 # Configuration parameters: Width.
 Style/IndentationWidth:
-  Enabled: false
+  Enabled: true
 
 # Offense count: 5
 # Cop supports --auto-correct.
@@ -154,13 +154,13 @@ Style/SingleSpaceBeforeFirstArg:
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 Style/SpaceBeforeBlockBraces:
-  Enabled: false
+  Enabled: true
 
 # Offense count: 5
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, EnforcedStyleForEmptyBraces, SpaceBeforeBlockParameters.
 Style/SpaceInsideBlockBraces:
-  Enabled: false
+  Enabled: true
 
 # Offense count: 100
 # Cop supports --auto-correct.
@@ -177,7 +177,7 @@ Style/TrailingBlankLines:
 # Offense count: 6
 # Cop supports --auto-correct.
 Style/TrailingWhitespace:
-  Enabled: false
+  Enabled: ture
 
 # Offense count: 15
 # Cop supports --auto-correct.

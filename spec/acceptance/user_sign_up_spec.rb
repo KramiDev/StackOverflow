@@ -1,6 +1,5 @@
 require_relative '../acceptance_helper'
 
-
 feature 'Sign up', %q{
   In order to be able create questions and answers
   As an user
