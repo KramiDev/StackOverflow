@@ -11,6 +11,18 @@
           li(class="attach-id-#{a.id}" )
             = link_to a.file_identifier, a.file.url
             = link_to ' Удалить файл', attachment_path(a), class: 'btn btn-danger btn-xs', method: :delete, remote: true if current_user and current_user.id == @question.user_id
+      .question-comments
+        .comments
+          = render @question.comments
+        .errors
+        = form_for [@question, @comment], remote: true do |f|
+          .form-group
+            = f.label :body, 'Комментарий'
+            = f.text_area :body, class: 'form-control'
+          .form-group
+            = f.submit 'Сохранить'
+        = link_to 'Добавить комментарий', '', class: 'add-comment-question' if current_user
+    br
     .col-md-12
       ul.nav.nav-pills.navbar-left.votes
         li.likes Likes: #{@question.likes_count}
@@ -57,3 +69,5 @@
             = f.submit 'Ответить', class: 'btn btn-primary btn-sm'
 
 = subscribe_to "/questions/#{@question.id}/answers"
+= subscribe_to "/questions/#{@question.id}/comments"
+= subscribe_to "/questions/#{@answer.id}/comments"

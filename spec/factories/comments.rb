@@ -3,4 +3,7 @@ FactoryGirl.define do
     body "MyText"
   end
 
+  factory :invalid_comment, class: Comment do
+    body nil
+  end
 end

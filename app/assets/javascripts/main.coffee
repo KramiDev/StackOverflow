@@ -6,10 +6,15 @@ $ ->
   answerCancel()
   questionlike()
   answerLike()
+  addCommentQuestion()
 
   $('body').on 'cocoon:after-insert', (e, insertedItem) ->
     removeFileField()
 
+window.addCommentQuestion = ->
+  $('.add-comment-question').on 'click', (e) ->
+    e.preventDefault()
+    $('#new_comment').show()
 
 window.answerLike = ->
   $('.answer-like').bind 'ajax:success', (e, data, status, xhr) ->
