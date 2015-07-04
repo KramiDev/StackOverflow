@@ -1,5 +1,5 @@
 - if answer.persisted?
-  div(class="row answer-#{answer.id}" )
+  .answer(class="row answer-#{answer.id}" )
     - best = 'best' if answer.best
     .col-md-10.col-md-offset-1.answer-block(class='#{best}')
       .row
@@ -19,16 +19,26 @@
       .row
         .col-md-12(class='answer-body-#{answer.id}')
           = answer.body
-          br 
+        br
+        .col-md-12.comments
+          = render answer.comments
+        .col-md-12.comment-block
+          - if current_user
+            .errors
+            = form_for(@answer.comments.build, url: question_answer_comments_path(answer.question, answer), data: { form_comment_id: "#{answer.id}" }, remote: true) do |f|
+              .form-group
+                = f.label :body, 'Комментарий'
+                = f.text_area :body, class: 'form-control'
+              .form-group
+                = f.submit 'Сохранить'
+            = link_to 'Добавить комментарий', '', class: 'answer-comment', data: { comment_answer_id: "#{answer.id}" }
+        br
         .col-md-6
           ul
             - answer.attachments.each do |a|
               li(class="attach-id-answer-#{a.id}")
                 = link_to a.file_identifier, a.file.url
                 = link_to ' Удалить файл', attachment_path(a), class: 'btn btn-danger btn-xs', method: :delete, remote: true if current_user and current_user.id == answer.user_id
-
-
-
       br
       ul.nav.nav-pills.answer-votes.pull-left(id='answer-like-#{answer.id}')
         li.likes Likes: #{answer.likes_count}

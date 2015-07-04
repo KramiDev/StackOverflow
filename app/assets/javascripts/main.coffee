@@ -7,6 +7,7 @@ $ ->
   questionlike()
   answerLike()
   addCommentQuestion()
+  addCommentAnswer()
 
   $('body').on 'cocoon:after-insert', (e, insertedItem) ->
     removeFileField()
@@ -15,6 +16,12 @@ window.addCommentQuestion = ->
   $('.add-comment-question').on 'click', (e) ->
     e.preventDefault()
     $('#new_comment').show()
+
+window.addCommentAnswer = ->
+  $('.answer-comment').on 'click', (e) ->
+    e.preventDefault()
+    answer_id = $(this).data('commentAnswerId')
+    form = $('*[data-form-comment-id="'+answer_id+'"]').show()
 
 window.answerLike = ->
   $('.answer-like').bind 'ajax:success', (e, data, status, xhr) ->

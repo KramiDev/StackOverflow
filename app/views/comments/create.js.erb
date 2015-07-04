@@ -1,12 +1,27 @@
-<% if @comment.errors.any? %>
-    $('.question-comments .errors').html('');
-    <% @comment.errors.full_messages.each do |msg| %>
-        $('.question-comments .errors').append('<%= j msg %> <br />');
+<% if @answer %>
+    $('.answer-<%= @answer.id %> .comment-block .errors').html('');
+    <% if @comment.errors.any? %>
+        <% @comment.errors.full_messages.each do |msg| %>
+            $('.answer-<%= @answer.id %> .comment-block .errors').append('<%= j msg %>');
+        <% end %>
+    <% else %>
+        $('.answer-<%= @answer.id %> #new_comment').hide();
+        $('.answer-<%= @answer.id %> #new_comment #comment_body').val('');
+        <% publish_to "/questions/#{@question.id}/comments" do %>
+            $('.answer-<%= @answer.id %> .comments').append('<%= j render @comment %>');
+        <% end %>
     <% end %>
 <% else %>
-    $('#new_comment #comment_body').val('');
-    $('#new_comment').hide();
-    <% publish_to "/questions/#{@parent.id}/comments" do %>
-        $('.question-comments .comments').append('<%= j render @comment %>');
+    <% if @comment.errors.any? %>
+        $('.question-comments .errors').html('');
+        <% @comment.errors.full_messages.each do |msg| %>
+            $('.question-comments .errors').append('<%= j msg %> <br />');
+        <% end %>
+    <% else %>
+        $('#new_comment #comment_body').val('');
+        $('#new_comment').hide();
+        <% publish_to "/questions/#{@question.id}/comments" do %>
+            $('.question-comments .comments').append('<%= j render @comment %>');
+        <% end %>
     <% end %>
 <% end %>

@@ -1,17 +1,22 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_association, only: [:create]
+  before_action :load_params, only: [:create]
 
   def create
-    @comment = @parent.comments.create(comments_params.merge(user: current_user))
+    @answer ? create_comment(@answer) : create_comment(@question)
     respond_to do |format|
       format.js {}
     end
   end
 
   private
-  def check_association
-    @parent = params[:answer_id] ? Answer.find(params[:answer_id]) : Question.find(params[:question_id])
+  def load_params
+    @question = Question.find(params[:question_id])
+    @answer = Answer.find(params[:answer_id]) if params[:answer_id]
+  end
+
+  def create_comment(model)
+    @comment = model.comments.create(comments_params.merge(user: current_user))
   end
 
   def comments_params

@@ -25,8 +25,8 @@ feature 'Answer like or dislike', %q{
 
     within '.answer-votes' do
       click_on 'like'
-      expect(page).to have_content 'Likes: 1'
     end
+    expect(page).to have_content 'Likes: 1'
   end
 
   scenario 'User try to dislike other\'s answer', js: true do
