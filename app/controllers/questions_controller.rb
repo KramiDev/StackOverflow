@@ -23,9 +23,6 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.new(questions_params.merge(user: current_user))
     @question.save
-    respond_to do |format|
-      format.js {}
-    end
   end
 
   def update

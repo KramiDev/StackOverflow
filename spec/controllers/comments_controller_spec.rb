@@ -12,6 +12,14 @@ RSpec.describe CommentsController, type: :controller do
         expect { post :create, question_id: question, comment: attributes_for(:comment), format: :js }.to change(Comment, :count).by(1)
       end
 
+      it 'association with comment' do
+        expect { post :create, question_id: question, comment: attributes_for(:comment), format: :js }.to change(question.comments, :count).by(1)
+      end
+
+      it 'User association with comment' do
+        expect { post :create, question_id: question, comment: attributes_for(:comment), format: :js }.to change(@user.comments, :count).by(1)
+      end
+
       it 'Render js' do
         post :create, question_id: question, comment: attributes_for(:comment), format: :js
         expect(response).to render_template 'comments/create'
@@ -23,6 +31,14 @@ RSpec.describe CommentsController, type: :controller do
         expect { post :create, question_id: question, comment: attributes_for(:invalid_comment), format: :js }.to change(Comment, :count).by(0)
       end
 
+      it 'association with comment' do
+        expect { post :create, question_id: question, comment: attributes_for(:invalid_comment), format: :js }.to change(question.comments, :count).by(0)
+      end
+
+      it 'User association with comment' do
+        expect { post :create, question_id: question, comment: attributes_for(:invalid_comment), format: :js }.to change(@user.comments, :count).by(0)
+      end
+
       it 'Render js' do
         post :create, question_id: question, comment: attributes_for(:invalid_comment), format: :js
         expect(response).to render_template 'comments/create'
@@ -31,22 +47,38 @@ RSpec.describe CommentsController, type: :controller do
 
     context 'Answer with valid attributes' do
       it 'Save in db' do
-        expect { post :create, question_id: question, answer: answer, comment: attributes_for(:comment), format: :js }.to change(Comment, :count).by(1)
+        expect { post :create, question_id: question, answer_id: answer, comment: attributes_for(:comment), format: :js }.to change(Comment, :count).by(1)
+      end
+
+      it 'association with comment' do
+        expect { post :create, question_id: question, answer_id: answer, comment: attributes_for(:comment), format: :js }.to change(answer.comments, :count).by(1)
+      end
+
+      it 'User association with comment' do
+        expect { post :create, question_id: question, answer_id: answer, comment: attributes_for(:comment), format: :js }.to change(@user.comments, :count).by(1)
       end
 
       it 'Render js' do
-        post :create, question_id: question, answer: answer, comment: attributes_for(:comment), format: :js
+        post :create, question_id: question, answer_id: answer, comment: attributes_for(:comment), format: :js
         expect(response).to render_template 'comments/create'
       end
     end
 
     context 'Answer without valid attributes' do
       it 'No save in db' do
-        expect { post :create, question_id: question, answer: answer, comment: attributes_for(:invalid_comment), format: :js }.to change(Comment, :count).by(0)
+        expect { post :create, question_id: question, answer_id: answer, comment: attributes_for(:invalid_comment), format: :js }.to change(Comment, :count).by(0)
+      end
+
+      it 'association with comment' do
+        expect { post :create, question_id: question, answer_id: answer, comment: attributes_for(:invalid_comment), format: :js }.to change(answer.comments, :count).by(0)
+      end
+
+      it 'User association with comment' do
+        expect { post :create, question_id: question, answer_id: answer, comment: attributes_for(:invalid_comment), format: :js }.to change(@user.comments, :count).by(0)
       end
 
       it 'Render js' do
-        post :create, question_id: question, answer: answer, comment: attributes_for(:invalid_comment), format: :js
+        post :create, question_id: question, answer_id: answer, comment: attributes_for(:invalid_comment), format: :js
         expect(response).to render_template 'comments/create'
       end
     end

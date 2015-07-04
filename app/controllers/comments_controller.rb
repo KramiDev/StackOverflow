@@ -4,9 +4,6 @@ class CommentsController < ApplicationController
 
   def create
     @answer ? create_comment(@answer) : create_comment(@question)
-    respond_to do |format|
-      format.js {}
-    end
   end
 
   private

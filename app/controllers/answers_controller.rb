@@ -5,17 +5,11 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.new(answers_params.merge(user: current_user))
-    respond_to do |format|
-      if @answer.save
-        question_author = @question.user_id
-        answer_author = @answer.user_id
-        @result = { question_author: question_author, answer_author: answer_author }
-        format.js {}
-      else
-        format.js {}
-      end
+    if @answer.save
+      question_author = @question.user_id
+      answer_author = @answer.user_id
+      @result = { question_author: question_author, answer_author: answer_author }
     end
-    # @answer.save ? flash[:notice] = 'Ответ успешно добавлен' : flash[:alert] = 'Ответ не сохранен'
   end
 
   def update
