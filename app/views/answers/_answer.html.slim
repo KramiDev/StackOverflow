@@ -1,5 +1,5 @@
 - if answer.persisted?
-  div(class="row answer-#{answer.id}" )
+  .answer(class="row answer-#{answer.id}" )
     - best = 'best' if answer.best
     .col-md-10.col-md-offset-1.answer-block(class='#{best}')
       .row
@@ -19,34 +19,44 @@
       .row
         .col-md-12(class='answer-body-#{answer.id}')
           = answer.body
-          br 
+        br
+        .col-md-12.comments
+          = render answer.comments
+        .col-md-12.comment-block
+          - if current_user
+            .errors
+            = form_for(@answer.comments.build, url: question_answer_comments_path(answer.question, answer), data: { form_comment_id: "#{answer.id}" }, remote: true) do |f|
+              .form-group
+                = f.label :body, 'Комментарий'
+                = f.text_area :body, class: 'form-control'
+              .form-group
+                = f.submit 'Сохранить'
+            = link_to 'Добавить комментарий', '', class: 'answer-comment', data: { comment_answer_id: "#{answer.id}" }
+        br
         .col-md-6
           ul
             - answer.attachments.each do |a|
               li(class="attach-id-answer-#{a.id}")
                 = link_to a.file_identifier, a.file.url
                 = link_to ' Удалить файл', attachment_path(a), class: 'btn btn-danger btn-xs', method: :delete, remote: true if current_user and current_user.id == answer.user_id
-
-
-
       br
       ul.nav.nav-pills.answer-votes.pull-left(id='answer-like-#{answer.id}')
         li.likes Likes: #{answer.likes_count}
         - if current_user and answer.user_id != current_user.id
-          li 
+          li.like
             = link_to 'like', votes_path(answer_id: answer, vote: 'up'), method: :post, remote: true, data: { type: :json }, class: 'answer-like'
-          li
+          li.dislike
             = link_to 'dislike', votes_path(answer_id: answer, vote: 'down'), method: :post, remote: true, data: { type: :json }, class: 'answer-like'
           li.cancel
             = link_to 'Отменить выбор', vote_path(answer_id: answer), method: :delete, remote: true, class: 'answer-cancel', data: {type: :json} if User.check_like(answer, current_user)
-      ul.nav.nav-pills.pull-right
+      ul.nav.nav-pills.pull-right.answer-edit
         - if current_user and current_user.id == answer.question.user_id && current_user.id != answer.user_id && !answer.best
-          li
+          li.best-answer
             = link_to 'Выбрать лучшим', best_question_answer_path(answer.question, answer), method: :post, remote: true
         - if current_user and current_user.id == answer.user_id
-          li
+          li.edit-links
             = link_to 'Редактировать', '', class: 'answer-edit-link', data: { answer_id: answer.id }
-          li
+          li.edit-links
             = link_to 'Удалить ответ', question_answer_path(@question, answer), method: :delete, remote: true, class: 'answer-delete-link'
       .row
         .col-md-12.text-center

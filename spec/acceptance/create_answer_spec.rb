@@ -5,12 +5,10 @@ feature 'Create answer', %q{
   As an user
   I want to create answer
  } do
-
   given!(:user) { create(:user) }
   given!(:question) { create(:question, user: user) }
 
   scenario 'Authenticated user create answer', js: true do
-
     sign_in(user)
 
     visit question_path(question)
@@ -19,14 +17,10 @@ feature 'Create answer', %q{
 
     expect(current_path).to eq question_path(question)
     expect(page).to have_content 'МойРедкийОтвет'
-
   end
 
   scenario 'Non-authenticated user try to create answer' do
-
     visit question_path(question)
     expect(page).to_not have_content 'Ответить'
-
   end
-
 end

@@ -5,6 +5,8 @@ head
   = javascript_include_tag 'application'
   = csrf_meta_tags
 body
+  - if current_user
+    .variables(data-user-id="#{current_user.id}" style="display: none;")
   .container
     = render partial: 'partials/menu'
     = render partial: 'partials/second_menu' if current_user

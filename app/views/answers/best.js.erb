@@ -5,4 +5,8 @@ $('.answers').html('<%= j render @question.answers.order(best: 'DESC') %>');
     <% flash[:notice] = '' %>
 <% end %>
 
+questionlike();
+questionCancel();
+answerLike();
+answerCancel();
 answerEditLink();

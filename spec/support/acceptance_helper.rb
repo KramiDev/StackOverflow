@@ -1,5 +1,4 @@
 module AcceptanceHelper
-
   def sign_in(user)
     visit new_user_session_path
     fill_in 'Email', with: user.email
@@ -21,7 +20,6 @@ module AcceptanceHelper
   end
 
   def create_question_upload_file
-
     visit new_question_path
 
     within '#new_question' do
@@ -33,12 +31,10 @@ module AcceptanceHelper
   end
 
   def create_answer_upload_file(question)
-
     visit question_path(question)
 
     fill_in 'Напишите свой ответ', with: 'МойРедкийОтвет'
     attach_file 'Файл', "#{Rails.root}/spec/rails_helper.rb"
     click_on 'Ответить'
   end
-
 end

@@ -1,13 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-
   let(:user) { create(:user) }
   let(:question) { create(:question) }
 
   describe 'GET #index' do
-
     before { get :index }
+
     let(:questions) { create_list(:question, 2) }
 
     it 'get an array of all questions' do
@@ -15,11 +14,9 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     it { should render_template :index }
-
   end
 
   describe 'GET #show' do
-
     before { get :show, id: question }
 
     it 'assigns attachment build' do
@@ -35,11 +32,9 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     it { should render_template :show }
-
   end
 
   describe 'GET #new' do
-
     sign_in_user
 
     before { get :new }
@@ -53,11 +48,9 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     it { should render_template :new }
-
   end
 
   describe 'GET #edit' do
-
     sign_in_user
 
     before { get :edit, id: question }
@@ -67,47 +60,38 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     it { should render_template :edit }
-
   end
 
   describe 'POST #create' do
-
     sign_in_user
 
     context 'with valid attributes' do
-
       it 'saves the new question in the database' do
-        expect { post :create, question: attributes_for(:question)}.to change(Question, :count).by(1)
+        expect { post :create, question: attributes_for(:question), format: :js }.to change(Question, :count).by(1)
       end
 
       it 'redirects to show view' do
-        post :create, question: attributes_for(:question)
-        expect(response).to redirect_to question_path(assigns(:question))
+        post :create, question: attributes_for(:question), format: :js
+        expect(response).to render_template 'questions/create'
       end
-
     end
 
     context 'without valid attributes' do
-
       it 'does not save the question' do
-        expect { post :create, question: attributes_for(:invalid_question) }.to_not change(Question, :count)
+        expect { post :create, question: attributes_for(:invalid_question), format: :js }.to_not change(Question, :count)
       end
 
       it 're-renders new view' do
-        post :create, question: attributes_for(:invalid_question)
-        expect(response).to render_template :new
+        post :create, question: attributes_for(:invalid_question), format: :js
+        expect(response).to render_template 'questions/create'
       end
-
     end
-
   end
 
   describe 'PATCH #update' do
-
     sign_in_user
 
     context 'valid attributes' do
-
       it 'find question by id' do
         patch :update, id: question, question: attributes_for(:question), format: :js
         expect(assigns(:question)).to eq question
@@ -127,7 +111,6 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'not valid attibutes' do
-
       it 'it does not update the question' do
         patch :update, id: question, question: attributes_for(:invalid_question), format: :js
         question.reload
@@ -139,19 +122,15 @@ RSpec.describe QuestionsController, type: :controller do
         patch :update, id: question, question: attributes_for(:invalid_question), format: :js
         expect(response).to render_template 'questions/update'
       end
-
     end
-
   end
 
   describe 'DELETE #destroy' do
-
     sign_in_user
 
     before { question }
 
     context 'User try to delete own question' do
-
       let!(:question) { create(:question, user: @user) }
 
       it 'delete the question' do
@@ -162,11 +141,9 @@ RSpec.describe QuestionsController, type: :controller do
         delete :destroy, id: question
         expect(response).to redirect_to questions_path
       end
-
     end
 
     context 'User try delete other question' do
-
       it 'delete the other question' do
         expect { delete :destroy, id: question }.to_not change(Question, :count)
       end
@@ -175,9 +152,6 @@ RSpec.describe QuestionsController, type: :controller do
         delete :destroy, id: question
         expect(response).to redirect_to question
       end
-
     end
-
   end
-
 end

@@ -1,0 +1,15 @@
+<% if @question.errors.any? %>
+    $(".question-form .errors").html('');
+    <% @question.errors.full_messages.each do |msg| %>
+        $(".question-form .errors").prepend('<%= j msg %><br />');
+    <% end %>
+<% else %>
+    $(window.location.replace("/questions/<%= @question.id %>"));
+    current_user = $(".variables").data('user-id');
+    if (current_user == <%= @question.id %>) {
+
+    }
+    <% publish_to '/questions/index' do %>
+        $('.questions').prepend('<%= j render @question %>');
+    <% end %>
+<% end %>

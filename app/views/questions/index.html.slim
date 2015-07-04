@@ -1,3 +1,6 @@
 .container-fluid
   h3 Последние вопросы
+  .questions
   = render @questions
+
+= subscribe_to "/questions/index"

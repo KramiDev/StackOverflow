@@ -9,6 +9,7 @@ class QuestionsController < ApplicationController
   def show
     @answer = @question.answers.build
     @answer.attachments.build
+    @comment = @question.comments.build
   end
 
   def new
@@ -21,11 +22,7 @@ class QuestionsController < ApplicationController
 
   def create
     @question = Question.new(questions_params.merge(user: current_user))
-    if @question.save
-      redirect_to @question
-    else
-      render :new
-    end
+    @question.save
   end
 
   def update

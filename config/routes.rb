@@ -1,16 +1,18 @@
 Rails.application.routes.draw do
-
   resources :attachments, only: [:destroy]
 
   devise_for :users
   resources :votes, only: [:create, :destroy]
 
-  resources :questions do
-    resources :answers, only: [:create, :update, :destroy] do
+  concern :commentable do
+    resources :comments, only: [:create]
+  end
+
+  resources :questions, concerns: :commentable do
+    resources :answers, only: [:create, :update, :destroy], concerns: :commentable do
       post :best, on: :member
     end
   end
-
 
 
 
