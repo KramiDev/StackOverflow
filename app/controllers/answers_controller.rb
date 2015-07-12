@@ -3,6 +3,8 @@ class AnswersController < ApplicationController
   before_action :find_question, only: [:create, :best]
   before_action :find_answer, only: [:best, :destroy, :update]
 
+  respond_to :js, only: [:update, :destroy, :best]
+
   def create
     @answer = @question.answers.new(answers_params.merge(user: current_user))
     if @answer.save
@@ -14,20 +16,25 @@ class AnswersController < ApplicationController
 
   def update
     if current_user.id == @answer.user_id
-      @answer.update(answers_params) ? flash[:notice] = 'Ответ обновлен' : flash[:alert] = 'Не удалось обновить ответ'
+      respond_with(@answer.update(answers_params))
+    else
+      redirect_to @answer.question
     end
   end
 
   def destroy
     if current_user.id == @answer.user_id
-      @answer.destroy ? flash[:notice] = 'Ваш ответ удален' : flash[:alert] = 'Ответ не удален'
+      respond_with(@answer.destroy)
+    else
+      redirect_to @answer.question
     end
   end
 
   def best
     if current_user.id == @question.user_id
-      @answer.check_best
-      flash[:notice] = 'Ответ ' + author_email(@answer) + ' был выбран лучшим'
+      respond_with(@answer.check_best)
+    else
+      redirect_to @answer.question
     end
   end
 
@@ -48,4 +55,5 @@ class AnswersController < ApplicationController
   def answers_params
     params.require(:answer).permit(:body, attachments_attributes: [:id, :file, :_destroy])
   end
+
 end
