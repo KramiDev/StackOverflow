@@ -2,16 +2,12 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :find_question, only: [:create, :best]
   before_action :find_answer, only: [:best, :destroy, :update]
+  before_action :data_create, only: [:create]
 
-  respond_to :js, only: [:update, :destroy, :best]
+  respond_to :js, only: [:update, :destroy, :best, :create]
 
   def create
-    @answer = @question.answers.new(answers_params.merge(user: current_user))
-    if @answer.save
-      question_author = @question.user_id
-      answer_author = @answer.user_id
-      @result = { question_author: question_author, answer_author: answer_author }
-    end
+    respond_with(@answer)
   end
 
   def update
@@ -50,6 +46,13 @@ class AnswersController < ApplicationController
 
   def author_email(answer)
     User.find(answer.user_id).email
+  end
+
+  def data_create
+    @answer = @question.answers.create(answers_params.merge(user: current_user))
+    question_author = @question.user_id
+    answer_author = @answer.user_id
+    @result = { question_author: question_author, answer_author: answer_author }
   end
 
   def answers_params
