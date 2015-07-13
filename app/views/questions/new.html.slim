@@ -11,7 +11,7 @@
         .form-group
           = f.label :body, 'Опишите подробно свой вопрос'
           = f.text_area :body, class: 'form-control'
-        = f.fields_for :attachments do |a|
+        = f.fields_for :attachments, @question.attachments.build do |a|
           .form-group
             = render 'questions/attachment_fields', :f => a
             = link_to_add_association 'Добавить файл', f, :attachments

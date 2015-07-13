@@ -10,7 +10,6 @@ feature 'Delete question' do
     visit question_path(question)
     click_on 'Удалить вопрос'
     expect(current_path).to eq questions_path
-    expect(page).to have_content 'Ваш вопрос удален'
   end
 
   scenario 'Non-authenticated user try to delete question' do

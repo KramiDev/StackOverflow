@@ -9,8 +9,8 @@ feature 'Add comment to the answer', %q{
   given!(:question) { create(:question) }
   given!(:answer) { create(:answer, question: question) }
 
-  scenario 'User add comment to answer' do
-    sign_in(:user)
+  scenario 'User add comment to answer', js: true do
+    sign_in(user)
     visit question_path(question)
 
     within '.answer .comment-block' do
@@ -19,9 +19,7 @@ feature 'Add comment to the answer', %q{
       click_on 'Сохранить'
     end
 
-    within '.answer .comments' do
-      expect(page).to have_content 'NewComment'
-    end
+    expect(page).to have_content 'NewComment'
   end
 
   scenario 'Non-authenticated user try add comment to answer' do

@@ -1,42 +1,36 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :find_question, only: [:show, :edit, :update, :destroy]
+  before_action :build_answer, only: [:show]
+
+  respond_to :js, only: [:create, :update]
 
   def index
-    @questions = Question.all
+    respond_with(@questions = Question.all)
   end
 
   def show
-    @answer = @question.answers.build
-    @answer.attachments.build
-    @comment = @question.comments.build
+    respond_with(@question)
   end
 
   def new
-    @question = Question.new
-    @question.attachments.build
+    respond_with(@question = Question.new)
   end
 
   def edit
   end
 
   def create
-    @question = Question.new(questions_params.merge(user: current_user))
-    @question.save
+    respond_with(@question = Question.create(questions_params.merge(user: current_user)))
   end
 
   def update
-    if @question.update(questions_params)
-      flash[:notice] = 'Вопрос успешно обновлен'
-    else
-      flash[:alert] = 'Обновить не удалось'
-    end
+    respond_with(@question.update(questions_params))
   end
 
   def destroy
     if @question.user_id == current_user.id
-      @question.destroy
-      redirect_to questions_path, notice: 'Ваш вопрос удален'
+      respond_with(@question.destroy)
     else
       redirect_to @question
     end
@@ -46,6 +40,10 @@ class QuestionsController < ApplicationController
 
   def find_question
     @question = Question.find(params[:id])
+  end
+
+  def build_answer
+    @answer = @question.answers.build
   end
 
   def questions_params

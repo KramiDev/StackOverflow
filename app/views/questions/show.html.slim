@@ -15,7 +15,7 @@
         .comments
           = render @question.comments
         .errors
-        = form_for [@question, @comment], remote: true do |f|
+        = form_for [@question, @question.comments.build], remote: true do |f|
           .form-group
             = f.label :body, 'Комментарий'
             = f.text_area :body, class: 'form-control'
@@ -61,7 +61,7 @@
           .form-group
             = f.label :body, "Напишите свой ответ"
             = f.text_area :body, class: 'form-control'
-            = f.fields_for :attachments do |a|
+            = f.fields_for :attachments, @answer.attachments.build do |a|
               .form-group
                 = render 'answers/attachment_fields', :f => a
                 = link_to_add_association 'Добавить файл', f, :attachments
