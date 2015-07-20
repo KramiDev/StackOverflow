@@ -7,4 +7,52 @@ RSpec.describe User, type: :model do
   it { should have_many(:answers).dependent(:destroy) }
   it { should have_many(:votes).dependent(:destroy) }
   it { should have_many(:comments).dependent(:destroy) }
+
+  describe '.find_for_oauth' do
+    let!(:user) { create(:user) }
+    let(:auth) { OmniAuth::AuthHash.new(provider: 'facebook', uid: '123456') }
+
+    context 'user already has authorization' do
+      it 'return the user' do
+        user.authorizations.create(provider: 'facebook', uid: '123456')
+        expect(User.find_for_oauth(auth)).to eq user
+      end
+    end
+
+    context 'user has not authorization' do
+      context 'user already exists' do
+        let(:auth) { OmniAuth::AuthHash.new(provider: 'facebook', uid: '123456', info: { email: user.email }) }
+
+        it 'does not create new user' do
+          expect { User.find_for_oauth(auth) }.to_not change(User, :count)
+        end
+
+        it 'create authorization for user' do
+          expect { User.find_for_oauth(auth) }.to change(user.authorizations, :count).by(1)
+        end
+
+        it 'create authorization with provider and uid' do
+          user = User.find_for_oauth(auth)
+          authorization = user.authorizations.first
+
+          expect(authorization.provider).to eq auth.provider
+          expect(authorization.uid).to eq auth.uid
+        end
+      end
+    end
+  end
+
+  # describe '.check_authorizations' do
+  #   let!(:user) { create(:user) }
+  #   let(:auth) { OmniAuth::AuthHash.new(provider: 'facebook', uid: '123456') }
+  #
+  #   it 'user has authorization' do
+  #     user.authorizations.create(provider: 'facebook', uid: '123456')
+  #     expect(User.check_authorization(auth)).to eq user
+  #   end
+  #
+  #   it 'user doesn\'t have authorization' do
+  #     expect(User.check_authorization(auth)).to be_falsey
+  #   end
+  # end
 end

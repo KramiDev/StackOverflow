@@ -1,0 +1,6 @@
+= form_for @user, url: email_confirmation_path, method: :post do |f|
+  = f.text_field :email
+  = f.fields_for :authorizations do |a|
+    = a.hidden_field :provider
+    = a.hidden_field :uid
+  = f.submit
