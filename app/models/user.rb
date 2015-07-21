@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
     authorization = Authorization.where(provider: auth.provider, uid: auth.uid).first
     return authorization.user if authorization
 
-    email = auth.info.email
+    email = auth.info.try(:email)
     if email
       user = User.where(email: email).first
     else
@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
     if user
       user.authorizations.create(provider: auth.provider, uid: auth.uid)
     else
-      user = create_new_user(email)
+      user = generate_user(email)
       user.skip_confirmation!
       user.save
       user.authorizations.create(provider: auth.provider, uid: auth.uid)
@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
     user
   end
 
-  def self.create_new_user(email)
+  def self.generate_user(email)
     password = Devise.friendly_token[0, 20]
     user = User.new(email: email, password: password, password_confirmation: password)
     user

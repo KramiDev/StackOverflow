@@ -2,6 +2,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   before_action :callback_hash
 
   def facebook
+    redirect new_user_session_path if @hash.nil?
     @user = User.find_for_oauth(@hash)
     if @user and @user.persisted?
       sign_in_auth(@user, 'facebook')
@@ -9,6 +10,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def twitter
+    redirect new_user_session_path if @hash.nil?
     @user = User.find_for_oauth(@hash)
     if @user and @user.persisted?
       sign_in_auth(@user, 'twitter')
@@ -21,7 +23,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def email_confirmation
-    @user = User.create_new_user(user_params)
+    @user = User.generate_user(user_params[:email])
     @user.authorizations.build(provider: session[:auth_provider], uid: session[:auth_uid])
     @user.save
     if @user

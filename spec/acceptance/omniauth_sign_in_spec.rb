@@ -19,7 +19,7 @@ feature 'Omniauth sign in', %q{
     end
   end
 
-  scenario 'sign in with  provider facebook' do
+  scenario 'sign in with  provider twitter' do
     sign_in_twitter
 
     visit new_user_session_path
@@ -30,14 +30,13 @@ feature 'Omniauth sign in', %q{
 
     open_email 'test@example.com'
     current_email.click_link 'Confirm my account'
-
     clear_emails
 
-    expect(page).to have_content 'Your email address has been successfully confirmed'
+    expect(page).to have_content 'Your email address has been successfully confirmed.'
     click_on 'Sign in with Twitter'
 
     within '.notice' do
-      expect(page).to have_content 'Successfully authenticated from Twitter account'
+      expect(page).to have_content 'Successfully authenticated from twitter account.'
     end
   end
 end

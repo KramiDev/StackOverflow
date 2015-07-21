@@ -41,18 +41,4 @@ RSpec.describe User, type: :model do
       end
     end
   end
-
-  # describe '.check_authorizations' do
-  #   let!(:user) { create(:user) }
-  #   let(:auth) { OmniAuth::AuthHash.new(provider: 'facebook', uid: '123456') }
-  #
-  #   it 'user has authorization' do
-  #     user.authorizations.create(provider: 'facebook', uid: '123456')
-  #     expect(User.check_authorization(auth)).to eq user
-  #   end
-  #
-  #   it 'user doesn\'t have authorization' do
-  #     expect(User.check_authorization(auth)).to be_falsey
-  #   end
-  # end
 end

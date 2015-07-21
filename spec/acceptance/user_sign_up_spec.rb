@@ -12,9 +12,15 @@ feature 'Sign up', %q{
     fill_in 'Password confirmation', with: '12345678'
     click_on 'Зарегистрироваться'
 
-    expect(page).to have_content 'Welcome! You have signed up successfully.'
-    expect(current_path).to eq root_path
-    expect(page).to have_link 'Выйти'
+    open_email 'myemail@example.com'
+    current_email.click_link 'Confirm my account'
+
+    clear_email
+
+    within '.notice' do
+      expect(page).to have_content 'Your email address has been successfully confirmed.'
+    end
+    expect(current_path).to eq new_user_session_path
   end
 
   given!(:user) { create(:user) }

@@ -217,6 +217,9 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-byebug (3.2.0)
+      byebug (~> 5.0)
+      pry (~> 0.10)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rack (1.6.1)
@@ -371,6 +374,7 @@ DEPENDENCIES
   omniauth-twitter
   pg
   private_pub
+  pry-byebug
   quiet_assets
   rails (= 4.2.1)
   rails-assets-bootstrap-sass!
