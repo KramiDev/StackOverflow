@@ -1,0 +1,4 @@
+= form_for @user, url: email_confirmation_path, method: :post do |f|
+  = f.label :email, 'Введите свой email'
+  = f.text_field :email
+  = f.submit 'Отправить'

@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
   resources :attachments, only: [:destroy]
 
-  devise_for :users
+
+
+  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
+  devise_scope :user do
+    post 'email_confirmation', to: 'omniauth_callbacks#email_confirmation'
+  end
   resources :votes, only: [:create, :destroy]
 
   concern :commentable do

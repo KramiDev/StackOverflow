@@ -17,9 +17,13 @@ gem 'cocoon'
 gem 'thin'
 gem 'private_pub'
 gem 'responders', '~> 2.0'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
 
 group :development, :test do
   gem 'byebug'
+  gem 'pry-byebug'
   gem 'web-console', '~> 2.0'
   gem 'spring'
   gem 'rspec-rails'
@@ -30,6 +34,9 @@ group :development, :test do
   gem 'capybara-webkit'
   gem 'database_cleaner'
   gem 'rubocop', require: false
+  gem 'quiet_assets'
+  gem 'letter_opener'
+  gem 'capybara-email'
 end
 
 group :test do
