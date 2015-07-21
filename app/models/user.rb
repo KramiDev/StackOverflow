@@ -11,8 +11,8 @@ class User < ActiveRecord::Base
   has_many :authorizations
   accepts_nested_attributes_for :authorizations
 
-  def self.check_like(model, user)
-    model.votes.where(user: user).first
+  def check_like(model)
+    model.votes.where(user: self).first
   end
 
   def self.find_for_oauth(auth)
@@ -23,18 +23,23 @@ class User < ActiveRecord::Base
     if email
       user = User.where(email: email).first
     else
-      return false
+      return nil
     end
 
     if user
       user.authorizations.create(provider: auth.provider, uid: auth.uid)
     else
-      password = Devise.friendly_token[0, 20]
-      user = User.new(email: email, password: password, password_confirmation: password)
+      user = create_new_user(email)
       user.skip_confirmation!
       user.save
       user.authorizations.create(provider: auth.provider, uid: auth.uid)
     end
+    user
+  end
+
+  def self.create_new_user(email)
+    password = Devise.friendly_token[0, 20]
+    user = User.new(email: email, password: password, password_confirmation: password)
     user
   end
 end

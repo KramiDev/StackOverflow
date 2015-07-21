@@ -37,4 +37,19 @@ module AcceptanceHelper
     attach_file 'Файл', "#{Rails.root}/spec/rails_helper.rb"
     click_on 'Ответить'
   end
+
+  def sign_in_facebook
+    OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new(
+        info: {email: 'test@example.com'},
+        provider: 'facebook',
+        uid: '123456'
+    )
+  end
+
+  def sign_in_twitter
+    OmniAuth.config.mock_auth[:twitter] = OmniAuth::AuthHash.new(
+        provider: 'twitter',
+        uid: '123456'
+    )
+  end
 end

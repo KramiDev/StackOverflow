@@ -35,6 +35,7 @@ group :development, :test do
   gem 'rubocop', require: false
   gem 'quiet_assets'
   gem 'letter_opener'
+  gem 'capybara-email'
 end
 
 group :test do
