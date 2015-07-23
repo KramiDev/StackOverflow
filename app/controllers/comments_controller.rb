@@ -2,6 +2,8 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :load_params, only: [:create]
 
+  authorize_resource
+
   def create
     @answer ? create_comment(@answer) : create_comment(@question)
   end

@@ -3,6 +3,8 @@ class AttachmentsController < ApplicationController
 
   respond_to :js, only: [:destroy]
 
+  authorize_resource
+
   def destroy
     @attach = Attachment.find(params[:id])
     @attach.attachable_type == 'Question' ? @result = Question.find(@attach.attachable_id) : @result = Answer.find(@attach.attachable_id)

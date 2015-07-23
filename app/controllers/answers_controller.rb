@@ -6,6 +6,8 @@ class AnswersController < ApplicationController
 
   respond_to :js, only: [:update, :destroy, :best, :create]
 
+  authorize_resource
+
   def create
     respond_with(@answer)
   end

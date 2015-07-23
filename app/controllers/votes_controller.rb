@@ -2,6 +2,8 @@ class VotesController < ApplicationController
   before_action :authenticate_user!
   before_action :load_vote, only: [:create, :destroy]
 
+  authorize_resource
+
   def create
     like = Vote.new_like(@vote, current_user, params)
     check_like = Vote.first_like(@vote, current_user)

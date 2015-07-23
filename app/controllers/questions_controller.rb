@@ -5,6 +5,8 @@ class QuestionsController < ApplicationController
 
   respond_to :js, only: [:create, :update]
 
+  authorize_resource
+
   def index
     respond_with(@questions = Question.all)
   end
