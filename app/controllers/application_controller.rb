@@ -12,5 +12,5 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, alert: exception.message
   end
 
-  check_authorize unless: :devise_controller?
+  check_authorization unless: :devise_controller?
 end

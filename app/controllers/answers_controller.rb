@@ -29,6 +29,7 @@ class AnswersController < ApplicationController
   end
 
   def best
+    authorize! :create, @question
     if current_user.id == @question.user_id
       respond_with(@answer.check_best)
     else
