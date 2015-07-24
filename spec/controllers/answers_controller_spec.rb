@@ -66,6 +66,9 @@ RSpec.describe AnswersController, type: :controller do
   describe 'POST #best' do
     sign_in_user
 
+    let!(:question) { create(:question, user: @user) }
+    let!(:answer) { create(:answer) }
+
     context 'Author check best answer' do
       before { question.update!(user: @user) }
 

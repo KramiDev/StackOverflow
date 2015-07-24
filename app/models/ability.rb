@@ -27,5 +27,6 @@ class Ability
     can :create, [Question, Answer, Comment, Vote]
     can :update, [Question, Answer, Comment], user: user
     can :destroy, [Question, Answer, Comment, Vote, Attachment], user: user
+    can :best, Question, user: user
   end
 end

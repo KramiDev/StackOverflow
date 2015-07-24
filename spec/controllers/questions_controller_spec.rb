@@ -80,6 +80,7 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'PATCH #update' do
     sign_in_user
+    let!(:question) { create(:question, user: @user) }
 
     context 'valid attributes' do
       it 'find question by id' do
@@ -95,7 +96,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it 'redirect to the updated question' do
-        patch :update, id: question, question: attributes_for(:question, user: @user), format: :js
+        patch :update, id: question, question: attributes_for(:question), format: :js
         expect(response).to render_template 'questions/update'
       end
     end
