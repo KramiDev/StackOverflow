@@ -5,8 +5,8 @@ class VotesController < ApplicationController
   authorize_resource
 
   def create
-    like = Vote.new_like(@vote, current_user, params)
-    check_like = Vote.first_like(@vote, current_user)
+    like = Vote.new_like(@parent, current_user, params)
+    check_like = Vote.first_like(@parent, current_user)
     check_like.destroy if check_like
     respond_to do |format|
       if like.save
@@ -14,7 +14,7 @@ class VotesController < ApplicationController
           render json:
           {
             like: like,
-            likes_count: @vote.likes_count
+            likes_count: @parent.likes_count
           }
         end
       else
@@ -24,13 +24,13 @@ class VotesController < ApplicationController
   end
 
   def destroy
-    Vote.first_like(@vote, current_user).destroy
+    @vote.destroy
     respond_to do |format|
       format.json do
         render json:
         {
-          like: @vote,
-          likes_count: @vote.likes_count,
+          like: @parent,
+          likes_count: @parent.likes_count,
           status: :success
         }
       end
@@ -40,6 +40,7 @@ class VotesController < ApplicationController
   private
 
   def load_vote
-    @vote =  params[:question_id] ? Question.find(params[:question_id]) : Answer.find(params[:answer_id])
+    @parent =  params[:question_id] ? Question.find(params[:question_id]) : Answer.find(params[:answer_id])
+    @vote = @parent.votes.where(user: current_user).first
   end
 end

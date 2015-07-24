@@ -10,10 +10,12 @@ class ApplicationController < ActionController::Base
 
   rescue_from CanCan::AccessDenied do |exception|
     # Rails.logger.debug("!!!!!!!!!!  #{exception.inspect} !!!!!!!!!!!!!!!!")
-    # if request.xhr?
-    #   render js: "window.location = '#{root_path}'"
-    # end
-    # redirect_to root_path, alert: exception.message
+    if request.xhr?
+      flash[:notice] = exception.message
+      render js: "window.location.replace('#{root_path}')"
+    else
+      redirect_to root_path, alert: exception.message
+    end
   end
 
   check_authorization unless: :devise_controller?

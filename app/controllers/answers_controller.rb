@@ -13,28 +13,15 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if current_user.id == @answer.user_id
-      respond_with(@answer.update(answers_params))
-    else
-      redirect_to @answer.question
-    end
+    respond_with(@answer.update(answers_params))
   end
 
   def destroy
-    if current_user.id == @answer.user_id
-      respond_with(@answer.destroy)
-    else
-      redirect_to @answer.question
-    end
+    respond_with(@answer.destroy)
   end
 
   def best
-    authorize! :create, Question
-    if current_user.id == @question.user_id
-        respond_with(@answer.check_best)
-    else
-      redirect_to @answer.question
-    end
+    respond_with(@answer.check_best)
   end
 
   private
