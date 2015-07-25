@@ -50,8 +50,6 @@ RSpec.describe QuestionsController, type: :controller do
     it 'get a question by id for edit' do
       expect(assigns(:question)).to eq question
     end
-
-    it { should render_template :edit }
   end
 
   describe 'POST #create' do
@@ -82,6 +80,7 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'PATCH #update' do
     sign_in_user
+    let!(:question) { create(:question, user: @user) }
 
     context 'valid attributes' do
       it 'find question by id' do
@@ -111,7 +110,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it 'render edit view' do
-        patch :update, id: question, question: attributes_for(:invalid_question), format: :js
+        patch :update, id: question, question: attributes_for(:invalid_question, user: @user), format: :js
         expect(response).to render_template 'questions/update'
       end
     end
@@ -142,7 +141,7 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'redirect to questions_list' do
         delete :destroy, id: question
-        expect(response).to redirect_to question
+        expect(response).to redirect_to root_path
       end
     end
   end

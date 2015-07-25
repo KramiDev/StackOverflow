@@ -19,6 +19,5 @@ feature 'Best answer', %q{
     end
 
     expect(page).to have_content 'Отмечен решением'
-    expect(page).to_not have_content 'Выбрать лучшим'
   end
 end

@@ -5,6 +5,8 @@ class QuestionsController < ApplicationController
 
   respond_to :js, only: [:create, :update]
 
+  authorize_resource
+
   def index
     respond_with(@questions = Question.all)
   end
@@ -29,11 +31,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    if @question.user_id == current_user.id
-      respond_with(@question.destroy)
-    else
-      redirect_to @question
-    end
+    respond_with(@question.destroy)
   end
 
   private

@@ -66,6 +66,8 @@ RSpec.describe AnswersController, type: :controller do
   describe 'POST #best' do
     sign_in_user
 
+    let(:answer) { create(:answer, question: question) }
+
     context 'Author check best answer' do
       before { question.update!(user: @user) }
 
@@ -98,11 +100,6 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'delete other answer' do
         expect { delete :destroy, question_id: question, id: answer, format: :js }.to_not change(Answer, :count)
-      end
-
-      it 'redirect back to question view' do
-        delete :destroy, question_id: question, id: answer, format: :js
-        expect(response).to redirect_to  answer.question
       end
     end
   end

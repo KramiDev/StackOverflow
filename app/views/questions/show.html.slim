@@ -10,7 +10,7 @@
         - @question.attachments.each do |a|
           li(class="attach-id-#{a.id}" )
             = link_to a.file_identifier, a.file.url
-            = link_to ' Удалить файл', attachment_path(a), class: 'btn btn-danger btn-xs', method: :delete, remote: true if current_user and current_user.id == @question.user_id
+            = link_to ' Удалить файл', attachment_path(a), class: 'btn btn-danger btn-xs', method: :delete, remote: true if can?(:destroy, a)
       .question-comments
         .comments
           = render @question.comments
@@ -26,19 +26,21 @@
     .col-md-12
       ul.nav.nav-pills.navbar-left.votes
         li.likes Likes: #{@question.likes_count}
-        - if current_user and current_user.id != @question.user_id
+        - if can?(:create, @question.votes.build)
           li
             = link_to 'like', votes_path(question_id: @question, vote: 'up'), method: :post, remote: true, data: { type: :json }, class: 'question-like'
           li
             = link_to 'dislike', votes_path(question_id: @question, vote: 'down'), method: :post, remote: true, data: { type: :json }, class: 'question-like'
+        - if can?(:destroy, @question.votes.build)
           li.cancel
             = link_to 'Отменить выбор', vote_path(question_id: @question), method: :delete, remote: true, class: 'question-cancel', data: { type: :json } if current_user.check_like(@question)
-      - if current_user and @question.user_id == current_user.id
+      - if can?(:update, @question)
         ul.nav.nav-pills.navbar-right
           li
             = link_to 'Редактировать', '', class: 'question-edit-link'
-          li
-            = link_to 'Удалить вопрос', question_path(@question), method: :delete
+          - if can?(:destroy, @question)
+            li
+              = link_to 'Удалить вопрос', question_path(@question), method: :delete
     .col-md-12.text-center
       = form_for @question, method: :patch, html: { id: "question-edit-form" }, remote: true do |f|
         .question-error

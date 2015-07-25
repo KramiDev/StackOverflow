@@ -6,32 +6,22 @@ class AnswersController < ApplicationController
 
   respond_to :js, only: [:update, :destroy, :best, :create]
 
+  authorize_resource
+
   def create
     respond_with(@answer)
   end
 
   def update
-    if current_user.id == @answer.user_id
-      respond_with(@answer.update(answers_params))
-    else
-      redirect_to @answer.question
-    end
+    respond_with(@answer.update(answers_params))
   end
 
   def destroy
-    if current_user.id == @answer.user_id
-      respond_with(@answer.destroy)
-    else
-      redirect_to @answer.question
-    end
+    respond_with(@answer.destroy)
   end
 
   def best
-    if current_user.id == @question.user_id
-      respond_with(@answer.check_best)
-    else
-      redirect_to @answer.question
-    end
+    respond_with(@answer.check_best)
   end
 
   private
