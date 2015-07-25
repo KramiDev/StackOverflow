@@ -38,24 +38,27 @@
             - answer.attachments.each do |a|
               li(class="attach-id-answer-#{a.id}")
                 = link_to a.file_identifier, a.file.url
-                = link_to ' Удалить файл', attachment_path(a), class: 'btn btn-danger btn-xs', method: :delete, remote: true if current_user and current_user.id == answer.user_id
+                - if can?(:destroy, a)
+                  = link_to ' Удалить файл', attachment_path(a), class: 'btn btn-danger btn-xs', method: :delete, remote: true 
       br
       ul.nav.nav-pills.answer-votes.pull-left(id='answer-like-#{answer.id}')
         li.likes Likes: #{answer.likes_count}
-        - if current_user and answer.user_id != current_user.id
+        - if can?(:create, answer.votes.build)
           li.like
             = link_to 'like', votes_path(answer_id: answer, vote: 'up'), method: :post, remote: true, data: { type: :json }, class: 'answer-like'
           li.dislike
-            = link_to 'dislike', votes_path(answer_id: answer, vote: 'down'), method: :post, remote: true, data: { type: :json }, class: 'answer-like'
+            = link_to 'dislike', votes_path(answer_id: answer, vote: 'down'), method: :post, remote: true, data: { type: :json }, class: 'answer-like'                
           li.cancel
             = link_to 'Отменить выбор', vote_path(answer_id: answer), method: :delete, remote: true, class: 'answer-cancel', data: {type: :json} if current_user.check_like(answer)
       ul.nav.nav-pills.pull-right.answer-edit
-        - if current_user and current_user.id == answer.question.user_id && current_user.id != answer.user_id && !answer.best
+        / - if current_user and current_user.id == answer.question.user_id && current_user.id != answer.user_id && !answer.best
+        - if can?(:best, answer)
           li.best-answer
             = link_to 'Выбрать лучшим', best_question_answer_path(answer.question, answer), method: :post, remote: true
-        - if current_user and current_user.id == answer.user_id
+        - if can?(:update, answer)
           li.edit-links
             = link_to 'Редактировать', '', class: 'answer-edit-link', data: { answer_id: answer.id }
+        - if can?(:destroy, answer)
           li.edit-links
             = link_to 'Удалить ответ', question_answer_path(@question, answer), method: :delete, remote: true, class: 'answer-delete-link'
       .row

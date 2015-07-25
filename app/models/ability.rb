@@ -23,11 +23,20 @@ class Ability
 
   def user_abilities
     guest_abilities
-    can :create, [Question, Answer, Comment, Vote]
+    can :create, [Question, Answer, Comment]
+    can :create, Vote do |vote|
+      vote.voteable.user_id != user.id
+    end
+    can :destroy, Vote do |vote|
+      vote.voteable.user_id != user.id
+    end
     can :update, [Question, Answer, Comment], user: user
-    can :destroy, [Question, Answer, Comment, Vote, Attachment], user: user
+    can :destroy, [Question, Answer, Comment, Vote], user: user
+    can :destroy, Attachment do |attachment|
+      attachment.attachable.user_id == user.id
+    end
     can :best, Answer do |answer|
-      answer.question.user_id == user.id
+      answer.question.user_id == user.id && answer.user_id != user.id
     end
   end
 end
