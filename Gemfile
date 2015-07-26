@@ -45,6 +45,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'capybara'
   gem 'launchy'
+  gem 'json_spec'
 end
 
 source 'https://rails-assets.org' do
