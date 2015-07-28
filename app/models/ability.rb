@@ -35,6 +35,7 @@ class Ability
     can :destroy, Attachment do |attachment|
       attachment.attachable.user_id == user.id
     end
+    can :me, User, id: user.id
     can :best, Answer do |answer|
       answer.question.user_id == user.id && answer.user_id != user.id
     end

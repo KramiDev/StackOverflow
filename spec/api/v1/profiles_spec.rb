@@ -18,6 +18,8 @@ describe "Profiles API" do
     end
 
     context 'authorized' do
+      let(:me) { create(:user) }
+      let(:access_token) { create(:access_token, resource_owner_id: me.id) }
       let!(:users) { create_list(:user, 2) }
 
       before { get '/api/v1/profiles', format: :json, access_token: access_token.token }
@@ -31,9 +33,20 @@ describe "Profiles API" do
       end
 
       it 'does no contain current_user' do
-        expect(response.body).not_to include_json(user.to_json)
+        expect(response.body).not_to include_json(me.to_json)
       end
 
+      %w(id email created_at updated_at admin).each do |attr|
+        it "contains #{attr}" do
+          expect(response.body).to be_json_eql(users[0].send(attr.to_sym).to_json).at_path("0/#{attr}")
+        end
+      end
+
+      %w(password, encrypted_password).each do |attr|
+        it "does not contain #{attr}" do
+          expect(response.body).to_not have_json_path("0/#{attr}")
+        end
+      end
     end
   end
   describe "GET /me" do
