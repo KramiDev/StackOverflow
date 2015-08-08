@@ -22,6 +22,9 @@ gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'cancancan'
 gem 'doorkeeper'
+gem 'active_model_serializers'
+gem 'oj'
+gem 'oj_mimic_json'
 
 group :development, :test do
   gem 'byebug'
@@ -33,7 +36,7 @@ group :development, :test do
   gem 'guard'
   gem 'guard-bundler', require: false
   gem 'guard-rspec', require: false
-  gem 'capybara-webkit'
+  gem 'poltergeist'
   gem 'database_cleaner'
   gem 'rubocop', require: false
   gem 'quiet_assets'
