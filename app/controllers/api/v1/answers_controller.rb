@@ -13,8 +13,8 @@ class Api::V1::AnswersController < Api::V1::BaseController
   end
 
   def create
-    @answer = Answer.create(answers_params.merge(user: current_resource_owner, question: @question))
-    respond_with api_v1_answer_path(@answer)
+    @answer = @question.answers.create(answers_params.merge(user: current_resource_owner))
+    respond_with :api, :v1, @answer
   end
 
   private
