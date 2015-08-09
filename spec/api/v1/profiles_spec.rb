@@ -5,17 +5,7 @@ describe "Profiles API" do
     let(:user) { create(:user) }
     let(:access_token) { create(:access_token, resource_owner_id: user.id) }
 
-
-    context 'unauthorized' do
-      it "return 401 status if no access token" do
-        get '/api/v1/profiles', format: :json
-        expect(response.status).to eq 401
-      end
-      it "return 401 status if non valid access token" do
-        get '/api/v1/profiles', format: :json, access_token: '1234'
-        expect(response.status).to eq 401
-      end
-    end
+    it_behaves_like 'API Authenticable'
 
     context 'authorized' do
       let(:me) { create(:user) }
@@ -48,19 +38,14 @@ describe "Profiles API" do
         end
       end
     end
-  end
-  describe "GET /me" do
-    context 'unauthorized' do
-      it "return 401 status if no access token" do
-        get '/api/v1/profiles/me', format: :json
-        expect(response.status).to eq 401
-      end
-      it "return 401 status if non valid access token" do
-        get '/api/v1/profiles/me', format: :json, access_token: '1234'
-        expect(response.status).to eq 401
-      end
-    end
 
+    # Shared to api_authorization
+    def do_request(options = {})
+      get api_v1_profiles_path, { format: :json }.merge(options)
+    end
+  end
+
+  describe "GET /me" do
     context 'authorized' do
       let(:me) { create(:user) }
       let(:access_token) { create(:access_token, resource_owner_id: me.id) }
@@ -82,6 +67,11 @@ describe "Profiles API" do
           expect(response.body).to_not have_json_path(attr)
         end
       end
+    end
+
+    # Shared to api_authorization
+    def do_request(options = {})
+      get me_api_v1_profiles_path, { format: :json }.merge(options)
     end
   end
 end
