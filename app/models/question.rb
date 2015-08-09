@@ -6,8 +6,6 @@ class Question < ActiveRecord::Base
   has_many :comments, as: :commentable, dependent: :destroy
   belongs_to :user
 
-  default_scope { order(created_at: 'DESC') }
-
   validates :title, :body, :user_id, presence: true
   validates :title, length: { minimum: 3, maximum: 150 }
 
