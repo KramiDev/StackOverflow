@@ -9,11 +9,11 @@ describe 'Answer API' do
   describe 'GET /answers' do
     context 'unauthorized' do
       it "return 401 status if no access token" do
-        get '/api/v1/answers', format: :json
+        get api_v1_answers_path, format: :json
         expect(response.status).to eq 401
       end
       it "return 401 status if non valid access token" do
-        get '/api/v1/answers', format: :json, access_token: '1234'
+        get api_v1_answers_path, format: :json, access_token: '1234'
         expect(response.status).to eq 401
       end
     end
@@ -94,5 +94,29 @@ describe 'Answer API' do
         end
       end
     end
+  end
+  describe 'POST /answers' do
+    context 'valid attributes' do
+
+      it 'returns status 201' do
+        post api_v1_answers_path, question_id: question.id, answer: attributes_for(:answer), format: :json, access_token: access_token.token
+        expect(response).to have_http_status :created
+      end
+
+      # it 'save in db' do
+      #   expect {post api_v1_questions_path, format: :json, access_token: access_token.token, question: attributes_for(:question)}.to change(Question, :count).by(1)
+      # end
+    end
+
+    # context 'invalid attributes' do
+    #   it 'returns status 422' do
+    #     post api_v1_questions_path, format: :json, access_token: access_token.token, question: attributes_for(:invalid_question)
+    #     expect(response).to have_http_status :unprocessable_entity
+    #   end
+    #
+    #   it 'not save in db' do
+    #     expect {post api_v1_questions_path, format: :json, access_token: access_token.token, question: attributes_for(:invalid_question)}.to_not change(Question, :count)
+    #   end
+    # end
   end
 end

@@ -93,4 +93,29 @@ describe 'Questions API' do
       end
     end
   end
+
+  describe 'POST /questions' do
+    context 'valid attributes' do
+
+      it 'returns status 201' do
+        post api_v1_questions_path, format: :json, access_token: access_token.token, question: attributes_for(:question)
+        expect(response).to have_http_status :created
+      end
+
+      it 'save in db' do
+        expect {post api_v1_questions_path, format: :json, access_token: access_token.token, question: attributes_for(:question)}.to change(Question, :count).by(1)
+      end
+    end
+
+    context 'invalid attributes' do
+      it 'returns status 422' do
+        post api_v1_questions_path, format: :json, access_token: access_token.token, question: attributes_for(:invalid_question)
+        expect(response).to have_http_status :unprocessable_entity
+      end
+
+      it 'not save in db' do
+        expect {post api_v1_questions_path, format: :json, access_token: access_token.token, question: attributes_for(:invalid_question)}.to_not change(Question, :count)
+      end
+    end
+  end
 end
