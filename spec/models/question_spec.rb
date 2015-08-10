@@ -5,12 +5,8 @@ RSpec.describe Question, type: :model do
   it { should validate_presence_of(:body) }
   it { should validate_length_of(:title).is_at_least(3).is_at_most(150) }
   it { should have_many(:answers).dependent(:destroy) }
-  it { should have_many(:attachments).dependent(:destroy) }
-  it { should have_many(:votes).dependent(:destroy) }
-  it { should have_many(:comments).dependent(:destroy) }
   it { should belong_to(:user) }
   it { should validate_presence_of :user_id }
-  it { should accept_nested_attributes_for :attachments }
 
   let!(:users) { create_list(:user, 4) }
   let!(:question) { create(:question) }
@@ -25,4 +21,8 @@ RSpec.describe Question, type: :model do
       expect(question.likes_count).to eq 2
     end
   end
+
+  it_behaves_like 'attachable'
+  it_behaves_like 'voteable'
+  it_behaves_like 'commentable'
 end
