@@ -7,10 +7,6 @@ RSpec.describe Answer, type: :model do
   it { should validate_presence_of :body }
   it { should validate_presence_of :user_id }
   it { should validate_presence_of :question_id }
-  it { should have_many(:attachments).dependent(:destroy) }
-  it { should have_many(:votes).dependent(:destroy) }
-  it { should have_many(:comments).dependent(:destroy) }
-  it { should accept_nested_attributes_for :attachments }
 
   let!(:users) { create_list(:user, 4) }
   let!(:question) { create(:question) }
@@ -43,4 +39,9 @@ RSpec.describe Answer, type: :model do
       expect(answer.likes_count).to eq 2
     end
   end
+
+  it_behaves_like 'attachable'
+  it_behaves_like 'voteable'
+  it_behaves_like 'commentable'
+
 end

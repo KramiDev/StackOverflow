@@ -5,16 +5,7 @@ describe 'Questions API' do
   let(:access_token) { create(:access_token, resource_owner_id: user.id) }
 
   describe 'GET /questions' do
-    context 'unauthorized' do
-      it "return 401 status if no access token" do
-        get '/api/v1/questions', format: :json
-        expect(response.status).to eq 401
-      end
-      it "return 401 status if non valid access token" do
-        get '/api/v1/questions', format: :json, access_token: '1234'
-        expect(response.status).to eq 401
-      end
-    end
+    it_behaves_like "API Authenticable"
 
     context 'authorized' do
       let!(:questions) { create_list(:question, 2) }
@@ -34,21 +25,17 @@ describe 'Questions API' do
         end
       end
     end
+
+    # Shared to api_authorization
+    def do_request(options = {})
+      get api_v1_questions_path, { format: :json }.merge(options)
+    end
   end
 
   describe 'GET /question/:id' do
     let!(:question) { create(:question) }
 
-    context 'unauthorized' do
-      it "return 401 status if no access token" do
-        get api_v1_question_path(question), format: :json
-        expect(response.status).to eq 401
-      end
-      it "return 401 status if non valid access token" do
-        get api_v1_question_path(question), format: :json, access_token: '1234'
-        expect(response.status).to eq 401
-      end
-    end
+    it_behaves_like "API Authenticable"
 
     context 'authorized' do
       let!(:comments) { create_list(:comment, 2, commentable_id: question.id, commentable_type: 'Question') }
@@ -91,6 +78,11 @@ describe 'Questions API' do
           expect(response.body).to be_json_eql(attachments.last.file.url.to_json).at_path("question/attachments/0/url")
         end
       end
+    end
+
+    # Shared to api_authorization
+    def do_request(options = {})
+      get api_v1_question_path(question), { format: :json }.merge(options)
     end
   end
 
