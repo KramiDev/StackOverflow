@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   end
 
   resources :questions, concerns: :commentable do
+    resources :subscribes, only: [:create, :destroy]
     resources :answers, only: [:create, :update, :destroy], concerns: :commentable do
       post :best, on: :member
     end

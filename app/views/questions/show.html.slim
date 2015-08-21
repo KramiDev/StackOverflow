@@ -3,8 +3,14 @@
     .col-md-12
       h3.text-center
         = @question.title
+        .pull-left.subscribe
+          - if current_user && current_user.subscribed?(@question)
+            = link_to 'Unsubscribe', question_subscribe_path(@question, current_user.subscription_for(@question)), method: :delete, remote: true
+          - else
+            = link_to 'Subscribe', question_subscribes_path(@question), method: :post, remote: true
       p.question-body
         = @question.body
+
       p
         ul
         - @question.attachments.each do |a|

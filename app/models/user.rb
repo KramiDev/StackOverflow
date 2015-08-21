@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_many :comments, dependent: :destroy
   has_many :authorizations
   accepts_nested_attributes_for :authorizations
+  has_many :subscribes, dependent: :destroy
 
   def check_like(model)
     model.votes.where(user: self).first
@@ -41,5 +42,13 @@ class User < ActiveRecord::Base
     password = Devise.friendly_token[0, 20]
     user = User.new(email: email, password: password, password_confirmation: password)
     user
+  end
+
+  def subscription_for(question)
+    @subscription ||= subscribes.where(question: question).first
+  end
+
+  def subscribed?(question)
+    !!subscription_for(question)
   end
 end

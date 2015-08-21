@@ -54,3 +54,7 @@ end
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap-sass'
 end
+
+gem 'sidekiq'
+gem 'sinatra', '>= 1.3.0', require: false
+gem 'whenever'
