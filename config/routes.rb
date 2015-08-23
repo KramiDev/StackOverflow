@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
+  get 'search/search'
+
   use_doorkeeper
   resources :attachments, only: [:destroy]
+
+  get 'search', to: 'search#search'
 
   namespace :api do
     namespace :v1 do

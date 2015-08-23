@@ -10,6 +10,11 @@ body
   .container
     = render partial: 'partials/menu'
     = render partial: 'partials/second_menu' if current_user
+    = form_tag search_path, method: :get do
+      = select_tag :resource, options_for_select(Search::SEARCH_RESOURCES.map { |n| n }, params[:resource])
+      = text_field_tag :query, params[:query]
+      = submit_tag
+    end
     .notice
       = notice
     .alert
