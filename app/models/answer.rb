@@ -20,6 +20,7 @@ class Answer < ActiveRecord::Base
   private
 
   def answer_notification
-     AnswerNotificationJob.perform_later(self)
+    Notification.send_mail(self).deliver_later
+    AnswerNotificationJob.perform_later(self)
   end
 end

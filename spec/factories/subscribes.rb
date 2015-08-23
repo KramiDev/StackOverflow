@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :subscribe do
-    user nil
-question nil
+    user
+    question
   end
 
 end
