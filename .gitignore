@@ -10,7 +10,8 @@
 config/database.yml
 config/secrets.yml
 public/uploads/
-
+config/development.sphinx.conf
+db/s[hinx]
 # Ignore all logfiles and tempfiles.
 /log/*
 !/log/.keep

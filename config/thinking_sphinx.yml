@@ -1,4 +1,8 @@
 development: 
-  mysql41: 9312
+  mysql41: 4143
+  enable_star: true
+  min_prefix_len: 2
+test: 
+  mysql41: 4143
   enable_star: true
   min_prefix_len: 2
