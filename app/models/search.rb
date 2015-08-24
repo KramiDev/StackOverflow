@@ -17,8 +17,4 @@ class Search
       resource.classify.constantize.search Riddle::Query.escape("#{query}*")
     end
   end
-
-  def valid?
-    query.length >= 2    
-  end
 end
