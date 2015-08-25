@@ -11,7 +11,6 @@ config/database.yml
 config/secrets.yml
 public/uploads/
 db/sphinx/*
-config/development.sphinx.conf
 config/*.sphinx.conf
 # Ignore all logfiles and tempfiles.
 dump.rdb
