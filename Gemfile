@@ -27,6 +27,7 @@ gem 'oj'
 gem 'oj_mimic_json'
 gem 'dotenv'
 gem 'dotenv-deployment', require: 'dotenv/deployment'
+gem 'therubyracer'
 
 group :development do
   gem 'capistrano', require: false
