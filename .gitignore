@@ -12,7 +12,7 @@ config/secrets.yml
 public/uploads/
 db/sphinx/*
 config/development.sphinx.conf
-config/test.sphinx.conf
+config/*.sphinx.conf
 # Ignore all logfiles and tempfiles.
 dump.rdb
 /log/*
