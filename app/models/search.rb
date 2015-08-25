@@ -7,7 +7,6 @@ class Search
   def initialize(params)
     @query = params[:query]
     @resource = params[:resource]
-
   end
 
   def search
