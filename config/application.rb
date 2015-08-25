@@ -1,5 +1,4 @@
 require File.expand_path('../boot', __FILE__)
-
 require "rails"
 # Pick the frameworks you want:
 require "active_model/railtie"
@@ -49,5 +48,7 @@ module StackOverflow
     end
 
     config.active_job.queue_adapter = :sidekiq
+
+    
   end
 end

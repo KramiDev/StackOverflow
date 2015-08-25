@@ -1,0 +1,17 @@
+.row.search
+  - @result.each do |result|
+    .row
+      .col-md-12
+      - if result.class.to_s == 'Question'
+        = result.title
+        br
+        = result.body
+        br
+      - elsif result.class.to_s == 'Answer'
+        = result.body
+        br
+      - elsif result.class.to_s == 'Comment'
+        = result.body
+        br
+      - else
+        = result.email
