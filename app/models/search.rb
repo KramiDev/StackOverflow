@@ -10,10 +10,14 @@ class Search
   end
 
   def search
-    if resource == 'All'
-      ThinkingSphinx.search Riddle::Query.escape("#{query}*")
-    else
-      resource.classify.constantize.search Riddle::Query.escape("#{query}*")
-    end
+    return [] unless valid?
+    classes = resource == 'All' ? nil : [resource]
+    ThinkingSphinx.search Riddle::Query.escape("#{query}*"), classes: classes
+  end
+
+  private
+
+  def valid?
+    SEARCH_RESOURCES.include?(resource)
   end
 end
