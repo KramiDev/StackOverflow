@@ -25,6 +25,15 @@ gem 'doorkeeper'
 gem 'active_model_serializers'
 gem 'oj'
 gem 'oj_mimic_json'
+gem 'dotenv'
+gem 'dotenv-deployment', require: 'dotenv/deployment'
+
+group :development do
+  gem 'capistrano', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
+end
 
 group :development, :test do
   gem 'byebug'
