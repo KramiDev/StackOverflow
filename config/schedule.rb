@@ -17,4 +17,8 @@ every 1.day do
   runner "DailyJob.perform_later"
 end
 
+every 30.minutes do
+  rake "ts:index"
+end
+
 # Learn more: http://github.com/javan/whenever
